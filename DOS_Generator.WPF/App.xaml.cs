@@ -7,7 +7,6 @@ using DOS_Generator.Core.Models;
 using DOS_Generator.Data;
 using DOS_Generator.WPF.Domain;
 using DOS_Generator.WPF.Services;
-using DOS_Generator.WPF.ViewModels;
 using DOS_Generator.WPF.ViewModels.Activities;
 using DOS_Generator.WPF.ViewModels.Forms;
 using DOS_Generator.WPF.ViewModels.Permanence;
@@ -25,31 +24,31 @@ namespace DOS_Generator.WPF
     /// </summary>
     public partial class App
     {
-        public static User User { get; set; }
-        public static AppSettings Settings { get; private set; }
-        public static Messenger Messenger { get; private set; }
         private readonly IHost _host;
+
         public App()
         {
-
             try
             {
                 _host = Host.CreateDefaultBuilder()
-                       .ConfigureAppConfiguration((context, builder) =>
-                       {
-                           builder.SetBasePath(Directory.GetCurrentDirectory())
-                               .AddJsonFile("appsettings.json", false, true);
-                       }).ConfigureServices((context, services) => { ConfigureServices(context.Configuration, services); })
-                       .Build();
+                    .ConfigureAppConfiguration((context, builder) =>
+                    {
+                        builder.SetBasePath(Directory.GetCurrentDirectory())
+                            .AddJsonFile("appsettings.json", false, true);
+                    }).ConfigureServices((context, services) => { ConfigureServices(context.Configuration, services); })
+                    .Build();
 
                 ServiceProvider = _host.Services;
             }
             catch (Exception e)
             {
-
                 MessageBox.Show(e.Message);
             }
         }
+
+        public static User User { get; set; }
+        public static AppSettings Settings { get; private set; }
+        public static Messenger Messenger { get; private set; }
 
         public static IServiceProvider ServiceProvider { get; private set; }
 
