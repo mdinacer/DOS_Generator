@@ -1,0 +1,208 @@
+﻿<UserControl
+    x:Class="DOS_Generator.WPF.Views.Settings.PortsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:DOS_Generator.Core.Models;assembly=DOS_Generator.Core"
+    d:DataContext="{Binding Source={StaticResource Locator}, Path=PortsViewModel}"
+    Loaded="OnLoaded"
+    Unloaded="OnUnloaded"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="Ports" Source="{Binding Ports}">
+            <CollectionViewSource.SortDescriptions>
+                <componentModel:SortDescription PropertyName="Name" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+
+        <Style TargetType="materialDesign:PackIcon">
+            <Setter Property="Height" Value="22" />
+            <Setter Property="Width" Value="22" />
+        </Style>
+        <Style BasedOn="{StaticResource OutlinedButton}" TargetType="Button">
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Padding" Value="5,0" />
+        </Style>
+
+        <Style x:Key="DefaultTextStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource Montserrat-Regular}" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Margin" Value="20,10" />
+        </Style>
+    </UserControl.Resources>
+    <materialDesign:Card Margin="20" Padding="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Margin="20,10"
+                    FontFamily="{StaticResource Montserrat-Regular}"
+                    FontSize="14"
+                    Text="PORTS" />
+                <Button
+                    Grid.Column="1"
+                    Command="{Binding AddNewPortCommand}"
+                    Style="{StaticResource OutlinedButton}">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="PLUS" />
+                            <TextBlock VerticalAlignment="Center">NEW PORT</TextBlock>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </Grid>
+            <ScrollViewer Grid.Row="1">
+                <ItemsControl ItemsSource="{Binding Source={StaticResource Ports}}">
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="models:Port">
+                            <Expander
+                                Margin="0,5"
+                                Background="Transparent"
+                                BorderBrush="{DynamicResource MaterialDesignDivider}"
+                                BorderThickness="1">
+                                <Expander.Resources>
+                                    <CollectionViewSource x:Key="Facilities" Source="{Binding Facilities}">
+                                        <CollectionViewSource.SortDescriptions>
+                                            <componentModel:SortDescription PropertyName="Name" />
+                                        </CollectionViewSource.SortDescriptions>
+                                    </CollectionViewSource>
+                                </Expander.Resources>
+                                <Expander.Header>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Style="{StaticResource DefaultTextStyle}" Text="{Binding Name}" />
+                                        <Button
+                                            Grid.Column="1"
+                                            Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Path=DataContext.EditCommand}"
+                                            CommandParameter="{Binding}">
+                                            <Button.Content>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <materialDesign:PackIcon Kind="Edit" />
+                                                    <TextBlock VerticalAlignment="Center">Edit</TextBlock>
+                                                </StackPanel>
+                                            </Button.Content>
+                                        </Button>
+                                        <Button
+                                            Grid.Row="0"
+                                            Grid.Column="2"
+                                            Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Path=DataContext.DeletePortCommand}"
+                                            CommandParameter="{Binding}">
+                                            <Button.Content>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <materialDesign:PackIcon Kind="Delete" />
+                                                    <TextBlock VerticalAlignment="Center">Delete</TextBlock>
+                                                </StackPanel>
+                                            </Button.Content>
+                                        </Button>
+
+                                        <Button
+                                            Grid.Row="0"
+                                            Grid.Column="3"
+                                            Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Path=DataContext.AddNewFacilityCommand}"
+                                            CommandParameter="{Binding}">
+                                            <Button.Content>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <materialDesign:PackIcon Kind="Plus" />
+                                                    <TextBlock VerticalAlignment="Center">New Facility</TextBlock>
+                                                </StackPanel>
+                                            </Button.Content>
+                                        </Button>
+                                    </Grid>
+                                </Expander.Header>
+
+                                <Border BorderBrush="{DynamicResource MaterialDesignDivider}" BorderThickness="0,1,0,0">
+                                    <Grid>
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock
+                                            Margin="20,10"
+                                            FontFamily="{StaticResource Montserrat-Regular}"
+                                            FontSize="14"
+                                            Text="FACILITIES" />
+
+                                        <ScrollViewer Grid.Row="1" Grid.Column="0">
+                                            <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding Source={StaticResource Facilities}}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel UseLayoutRounding="True" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate DataType="models:Facility">
+                                                        <materialDesign:ColorZone>
+                                                            <materialDesign:ColorZone.Style>
+                                                                <Style TargetType="materialDesign:ColorZone">
+                                                                    <Setter Property="CornerRadius" Value="4" />
+                                                                    <Setter Property="BorderThickness" Value="1" />
+                                                                    <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignDivider}" />
+                                                                    <Setter Property="Padding" Value="0" />
+                                                                    <Setter Property="Margin" Value="5" />
+                                                                    <Setter Property="Visibility" Value="Visible" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding IsDeleted}" Value="True">
+                                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </materialDesign:ColorZone.Style>
+                                                            <Grid>
+                                                                <Grid.Resources>
+                                                                    <Style BasedOn="{StaticResource ToolButton}" TargetType="Button">
+                                                                        <Setter Property="Margin" Value="5" />
+                                                                    </Style>
+                                                                </Grid.Resources>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition SharedSizeGroup="NameColumn" />
+                                                                    <ColumnDefinition Width="Auto" />
+                                                                    <ColumnDefinition Width="Auto" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <TextBlock Style="{StaticResource DefaultTextStyle}" Text="{Binding Name}" />
+                                                                <Button
+                                                                    Grid.Column="1"
+                                                                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Path=DataContext.EditCommand}"
+                                                                    CommandParameter="{Binding}"
+                                                                    Content="{materialDesign:PackIcon Edit}"
+                                                                    ToolTip="Edit" />
+                                                                <Button
+                                                                    Grid.Column="2"
+                                                                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Path=DataContext.DeleteFacilityCommand}"
+                                                                    CommandParameter="{Binding}"
+                                                                    Content="{materialDesign:PackIcon Delete}"
+                                                                    ToolTip="Delete" />
+                                                            </Grid>
+                                                        </materialDesign:ColorZone>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Border>
+                            </Expander>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+            </ScrollViewer>
+        </Grid>
+    </materialDesign:Card>
+</UserControl>

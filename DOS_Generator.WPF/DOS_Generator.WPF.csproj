@@ -37,10 +37,8 @@
     <Folder Include="Database\" />
     <Folder Include="ViewModels\Dialogs\" />
     <Folder Include="ViewModels\Controls\" />
-    <Folder Include="ViewModels\Settings\" />
     <Folder Include="ViewModels\Wizard\" />
     <Folder Include="Views\Wizard\" />
-    <Folder Include="Views\Settings\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,7 +7,10 @@ using DOS_Generator.Data;
 using DOS_Generator.WPF.Domain;
 using DOS_Generator.WPF.Services;
 using DOS_Generator.WPF.ViewModels;
+using DOS_Generator.WPF.ViewModels.Activities;
+using DOS_Generator.WPF.ViewModels.Forms;
 using DOS_Generator.WPF.ViewModels.Permanence;
+using DOS_Generator.WPF.ViewModels.Settings;
 using DOS_Generator.WPF.ViewModels.Template;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -48,9 +51,15 @@ namespace DOS_Generator.WPF
                     x => x.MigrationsAssembly("Security.Data")));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<DeclarationTemplateViewModel>();
-            services.AddScoped<PermanenceViewModel>();
+            services.AddSingleton<ActivitiesViewModel>();
+            services.AddTransient<PermanenceViewModel>();
+            services.AddTransient<AgencyFormViewModel>();
+            services.AddTransient<PortsViewModel>();
+            services.AddTransient<ShipsViewModel>();
+            services.AddTransient<OfficersViewModel>();
+            services.AddTransient<AgenciesViewModel>();
+            services.AddTransient<DeclarationFormViewModel>();
             services.AddTransient<MainWindow>();
         }
 

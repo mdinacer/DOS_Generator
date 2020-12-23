@@ -1,0 +1,107 @@
+﻿<UserControl
+    x:Class="DOS_Generator.WPF.Views.Settings.ConfigurationView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:domain="clr-namespace:DOS_Generator.WPF.Domain"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:settings="clr-namespace:DOS_Generator.WPF.Views.Settings"
+    d:DesignHeight="768"
+    d:DesignWidth="1360"
+    mc:Ignorable="d">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <materialDesign:ColorZone
+            Margin="5"
+            Padding="0,20,0,20"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            CornerRadius="4"
+            Mode="Dark">
+            <ListBox
+                x:Name="ViewsList"
+                materialDesign:ThemeAssist.Theme="Dark"
+                Grid.IsSharedSizeScope="True"
+                SelectedIndex="0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="domain:ViewItem">
+                        <StackPanel Orientation="Vertical">
+                            <materialDesign:PackIcon
+                                Width="32"
+                                Height="32"
+                                Margin="5,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Kind="{Binding Icon}" />
+                            <TextBlock
+                                MaxWidth="80"
+                                Margin="10,0"
+                                VerticalAlignment="Center"
+                                Text="{Binding Title}"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+                <ListBox.ItemContainerStyle>
+                    <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListBoxItem">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="Foreground" Value="{DynamicResource PrimaryHueLightBrush}" />
+                                <Setter Property="BorderBrush" Value="{DynamicResource PrimaryHueLightBrush}" />
+
+                            </Trigger>
+                        </Style.Triggers>
+                        <Setter Property="BorderThickness" Value="5,0,0,0" />
+                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryHueDarkBrush}" />
+                    </Style>
+                </ListBox.ItemContainerStyle>
+
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="1" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+                <domain:ViewItem Title="USER" Icon="Account">
+                    <domain:ViewItem.Content>
+                        <settings:OfficersView />
+                    </domain:ViewItem.Content>
+                </domain:ViewItem>
+
+                <domain:ViewItem Title="SHIPS" Icon="Ship">
+                    <domain:ViewItem.Content>
+                        <settings:ShipsView />
+                    </domain:ViewItem.Content>
+                </domain:ViewItem>
+
+                <domain:ViewItem Title="PORTS FACILITIES" Icon="Industrial">
+                    <domain:ViewItem.Content>
+                        <settings:PortsView />
+                    </domain:ViewItem.Content>
+                </domain:ViewItem>
+
+                <domain:ViewItem Title="AGENCIES" Icon="Company">
+                    <domain:ViewItem.Content>
+                        <settings:AgenciesView />
+                    </domain:ViewItem.Content>
+                </domain:ViewItem>
+
+                <domain:ViewItem Title="TEMPLATE" Icon="FileWord" />
+
+            </ListBox>
+        </materialDesign:ColorZone>
+
+        <ContentControl Grid.Column="1" Content="{Binding ElementName=ViewsList, Path=SelectedItem.(domain:ViewItem.Content)}" />
+    </Grid>
+</UserControl>

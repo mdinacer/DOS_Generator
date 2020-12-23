@@ -1,0 +1,343 @@
+﻿<UserControl
+    x:Class="DOS_Generator.WPF.Views.Settings.ShipsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:DOS_Generator.Core.Models;assembly=DOS_Generator.Core"
+    xmlns:settings="clr-namespace:DOS_Generator.WPF.ViewModels.Settings"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Loaded="OnLoaded"
+    Unloaded="OnUnloaded"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <Style TargetType="materialDesign:PackIcon">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+
+    </UserControl.Resources>
+    <d:UserControl.DataContext>
+        <settings:ShipsViewModel />
+    </d:UserControl.DataContext>
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.Resources>
+                <Style BasedOn="{StaticResource OutlinedButton}" TargetType="Button">
+                    <Setter Property="Margin" Value="5" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                Margin="20,0"
+                VerticalAlignment="Bottom"
+                FontFamily="{StaticResource Montserrat-Regular}"
+                FontSize="28"
+                Text="SHIPS" />
+
+            <TextBox
+                Grid.Column="2"
+                Margin="20,0,0,5"
+                materialDesign:HintAssist.Hint="Find Ship"
+                materialDesign:TextFieldAssist.HasClearButton="True"
+                Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Button
+                Grid.Column="3"
+                Command="{Binding FindShipCommand}"
+                Content="{materialDesign:PackIcon Magnify,
+                                                  Size=24}"
+                ToolTip="Find" />
+
+            <Button
+                Grid.Column="4"
+                Command="{Binding AddNewShipCommand}"
+                Content="{materialDesign:PackIcon Add,
+                                                  Size=24}"
+                ToolTip="Add New Ship" />
+
+            <Button
+                Grid.Column="5"
+                Margin="5,5,20,5"
+                Command="{Binding RefreshCommand}"
+                Content="{materialDesign:PackIcon Refresh,
+                                                  Size=24}"
+                ToolTip="Refresh" />
+        </Grid>
+        <Border
+            Grid.Row="1"
+            BorderBrush="{DynamicResource MaterialDesignDivider}"
+            BorderThickness="0,1">
+            <ScrollViewer>
+                <ItemsControl
+                    Padding="20,10"
+                    HorizontalAlignment="Center"
+                    Grid.IsSharedSizeScope="True"
+                    ItemsSource="{Binding Ships}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel IsItemsHost="True" UseLayoutRounding="True" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="Margin" Value="5" />
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="models:Ship">
+                            <materialDesign:ColorZone
+                                Width="350"
+                                Height="285"
+                                Margin="5"
+                                Padding="0,10"
+                                HorizontalAlignment="Left"
+                                materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                CornerRadius="4"
+                                SnapsToDevicePixels="True">
+
+                                <Grid>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" SharedSizeGroup="ShipRow" />
+                                        <RowDefinition />
+                                        <RowDefinition Height="Auto" SharedSizeGroup="AgencyRow" />
+                                        <RowDefinition Height="Auto" SharedSizeGroup="ButtonsRow" />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock
+                                            Margin="20,20,20,5"
+                                            VerticalAlignment="Center"
+                                            FontFamily="{StaticResource Montserrat-Regular}"
+                                            FontSize="18"
+                                            Text="{Binding Name}"
+                                            TextAlignment="Left"
+                                            TextWrapping="Wrap" />
+
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Margin="20,0,20,10"
+                                            FontFamily="{StaticResource Montserrat-Regular}"
+                                            Text="{Binding Email, TargetNullValue='Undefined'}" />
+
+                                        <Grid Grid.Row="2">
+                                            <Grid.Resources>
+                                                <Style x:Key="TitleStyle" TargetType="TextBlock">
+                                                    <Setter Property="FontFamily" Value="{StaticResource Montserrat-Light}" />
+                                                    <Setter Property="Margin" Value="20,2,0,3" />
+                                                    <Setter Property="FontSize" Value="11" />
+                                                    <Setter Property="VerticalAlignment" Value="Bottom" />
+                                                </Style>
+
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="FontFamily" Value="{StaticResource Montserrat-Regular}" />
+                                                    <Setter Property="Margin" Value="5,2,20,2" />
+                                                    <Setter Property="FontSize" Value="12" />
+                                                    <Setter Property="VerticalAlignment" Value="Bottom" />
+                                                </Style>
+                                            </Grid.Resources>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock
+                                                Grid.Column="0"
+                                                FontWeight="Bold"
+                                                Style="{StaticResource TitleStyle}"
+                                                Text="IMO Number:" />
+                                            <TextBlock
+                                                Grid.Row="0"
+                                                Grid.Column="1"
+                                                Text="{Binding ImoNumber, TargetNullValue=Empty}" />
+
+                                            <TextBlock
+                                                Grid.Row="1"
+                                                Grid.Column="0"
+                                                FontWeight="Bold"
+                                                Style="{StaticResource TitleStyle}"
+                                                Text="Port Of Registry:" />
+                                            <TextBlock
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                Text="{Binding PortOfRegistry, TargetNullValue=Empty}" />
+
+                                        </Grid>
+                                    </Grid>
+                                    <Border
+                                        Grid.Row="1"
+                                        Height="1"
+                                        Margin="0,5"
+                                        Background="{DynamicResource MaterialDesignDivider}"
+                                        SnapsToDevicePixels="True" />
+
+                                    <Grid Grid.Row="2">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            Margin="20,10,20,0"
+                                            FontFamily="{StaticResource Montserrat-Light}"
+                                            FontSize="13"
+                                            Text="AGENCY" />
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            MaxWidth="230"
+                                            Margin="20,5,20,5"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            FontFamily="{StaticResource Montserrat-Regular}"
+                                            FontSize="16"
+                                            Text="{Binding Agency.Name, FallbackValue='No Agency'}"
+                                            TextAlignment="Left"
+                                            TextWrapping="Wrap" />
+
+                                        <TextBlock
+                                            Grid.Row="2"
+                                            Margin="20,0,20,5"
+                                            HorizontalAlignment="Left"
+                                            Text="{Binding Agency.Email, TargetNullValue='No agency email'}"
+                                            TextAlignment="Left"
+                                            TextWrapping="Wrap" />
+
+                                        <Border
+                                            Grid.Row="3"
+                                            Height="1"
+                                            Margin="0,5"
+                                            Background="{DynamicResource MaterialDesignDivider}"
+                                            SnapsToDevicePixels="True" />
+
+
+                                    </Grid>
+
+                                    <Grid Grid.Row="3">
+                                        <Grid.Resources>
+                                            <Style BasedOn="{StaticResource MaterialDesignOutlinedButton}" TargetType="Button">
+                                                <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="4" />
+                                            </Style>
+                                        </Grid.Resources>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Button
+                                            Margin="20,10,5,10"
+                                            Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Path=DataContext.EditShipCommand}"
+                                            CommandParameter="{Binding}"
+                                            Content="{materialDesign:PackIcon Edit,
+                                                                              Size=24}"
+                                            ToolTip="Edit" />
+                                        <Button
+                                            Grid.Column="1"
+                                            Margin="5,10,20,10"
+                                            Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Path=DataContext.RemoveShipCommand}"
+                                            CommandParameter="{Binding}"
+                                            Content="{materialDesign:PackIcon Close,
+                                                                              Size=24}"
+                                            ToolTip="Delete" />
+                                    </Grid>
+
+                                </Grid>
+
+                            </materialDesign:ColorZone>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+
+        <materialDesign:ColorZone
+            Grid.Row="2"
+            Margin="5"
+            Padding="20,5"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            CornerRadius="8"
+            Mode="Dark">
+
+            <Grid
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                materialDesign:ThemeAssist.Theme="Dark">
+                <Grid.Resources>
+                    <Style BasedOn="{StaticResource ToolButton}" TargetType="Button" />
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="25" />
+                    <ColumnDefinition Width="25" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="25" />
+                    <ColumnDefinition Width="25" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Column="0"
+                    Command="{Binding PageFirstCommand}"
+                    Content="{materialDesign:PackIcon ChevronDoubleLeft,
+                                                      Size=24}"
+                    ToolTip="First" />
+                <Button
+                    Grid.Column="1"
+                    Command="{Binding PagePreviousCommand}"
+                    Content="{materialDesign:PackIcon ChevronLeft,
+                                                      Size=24}"
+                    ToolTip="Previous" />
+                <TextBlock
+                    Grid.Column="2"
+                    Width="100"
+                    Margin="10,0"
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource Montserrat-Regular}"
+                    FontSize="14"
+                    Text="{Binding SelectedPage, StringFormat='Page {0}'}"
+                    TextAlignment="Center" />
+                <Button
+                    Grid.Column="3"
+                    Command="{Binding PageNextCommand}"
+                    Content="{materialDesign:PackIcon ChevronRight,
+                                                      Size=24}"
+                    ToolTip="Next" />
+                <Button
+                    Grid.Column="4"
+                    Command="{Binding PageLastCommand}"
+                    Content="{materialDesign:PackIcon ChevronDoubleRight,
+                                                      Size=24}"
+                    ToolTip="Last" />
+            </Grid>
+        </materialDesign:ColorZone>
+
+
+    </Grid>
+</UserControl>

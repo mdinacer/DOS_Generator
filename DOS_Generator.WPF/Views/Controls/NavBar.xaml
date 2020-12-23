@@ -2,10 +2,14 @@
     x:Class="DOS_Generator.WPF.Views.Controls.NavBar"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:activities="clr-namespace:DOS_Generator.WPF.Views.Activities"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:domain="clr-namespace:DOS_Generator.WPF.Domain"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:permanence="clr-namespace:DOS_Generator.WPF.Views.Permanence"
+    xmlns:settings="clr-namespace:DOS_Generator.WPF.Views.Settings"
+    xmlns:template="clr-namespace:DOS_Generator.WPF.Views.Template"
     d:DesignHeight="450"
     d:DesignWidth="800"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
@@ -79,14 +83,29 @@
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
 
-                <domain:ViewItem Title="PERMANENCE" Icon="ShieldAccount" />
+                <domain:ViewItem Title="PERMANENCE" Icon="ShieldAccount">
+                    <domain:ViewItem.Content>
+                        <permanence:PermanenceView />
+                    </domain:ViewItem.Content>
+                </domain:ViewItem>
 
-                <domain:ViewItem Title="MODEL" Icon="FormatListCheckbox" />
+                <domain:ViewItem Title="MODEL" Icon="FormatListCheckbox">
+                    <domain:ViewItem.Content>
+                        <template:DeclarationTemplateView />
+                    </domain:ViewItem.Content>
+                </domain:ViewItem>
 
-                <domain:ViewItem Title="ACTIVITIES" Icon="History" />
+                <domain:ViewItem Title="ACTIVITIES" Icon="History">
+                    <domain:ViewItem.Content>
+                        <activities:ActivitiesView />
+                    </domain:ViewItem.Content>
+                </domain:ViewItem>
 
-                <domain:ViewItem Title="SETTINGS" Icon="Settings" />
-
+                <domain:ViewItem Title="SETTINGS" Icon="Settings">
+                    <domain:ViewItem.Content>
+                        <settings:ConfigurationView />
+                    </domain:ViewItem.Content>
+                </domain:ViewItem>
 
 
             </ListBox>
