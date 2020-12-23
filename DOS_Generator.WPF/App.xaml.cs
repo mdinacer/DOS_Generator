@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using DOS_Generator.Core;
 using DOS_Generator.Core.Models;
 using DOS_Generator.Data;
@@ -26,23 +27,31 @@ namespace DOS_Generator.WPF
     {
         public static User User { get; set; }
         public static AppSettings Settings { get; private set; }
+        public static Messenger Messenger { get; private set; }
         private readonly IHost _host;
-
         public App()
         {
-            _host = Host.CreateDefaultBuilder()
-                .ConfigureAppConfiguration((context, builder) =>
-                {
-                    builder.SetBasePath(Directory.GetCurrentDirectory())
-                        .AddJsonFile("appsettings.json", false, true);
-                }).ConfigureServices((context, services) => { ConfigureServices(context.Configuration, services); })
-                .Build();
 
-            ServiceProvider = _host.Services;
+            try
+            {
+                _host = Host.CreateDefaultBuilder()
+                       .ConfigureAppConfiguration((context, builder) =>
+                       {
+                           builder.SetBasePath(Directory.GetCurrentDirectory())
+                               .AddJsonFile("appsettings.json", false, true);
+                       }).ConfigureServices((context, services) => { ConfigureServices(context.Configuration, services); })
+                       .Build();
+
+                ServiceProvider = _host.Services;
+            }
+            catch (Exception e)
+            {
+
+                MessageBox.Show(e.Message);
+            }
         }
 
         public static IServiceProvider ServiceProvider { get; private set; }
-        public static Messenger Messenger { get; private set; }
 
         private static void ConfigureServices(IConfiguration configuration, IServiceCollection services)
         {
@@ -60,6 +69,7 @@ namespace DOS_Generator.WPF
             services.AddTransient<OfficersViewModel>();
             services.AddTransient<AgenciesViewModel>();
             services.AddTransient<DeclarationFormViewModel>();
+
             services.AddTransient<MainWindow>();
         }
 
@@ -68,12 +78,44 @@ namespace DOS_Generator.WPF
             if (_host != null)
                 await _host.StartAsync();
 
+            //Thread.CurrentThread.CurrentCulture = new CultureInfo("fr-DZ");
+            //Thread.CurrentThread.CurrentUICulture = new CultureInfo("fr-DZ");
+            //FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(
+            //    XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
             Messenger = new Messenger();
+
+            if (!File.Exists(@".\AppSettings.xml"))
+                AppSettingsServices.WriteSettings(new AppSettings());
+
+            Settings = AppSettingsServices.ReadSettings();
+
+            EventManager.RegisterClassHandler(typeof(TextBox),
+                UIElement.GotFocusEvent,
+                new RoutedEventHandler(TextBox_GotFocus));
+
+            EventManager.RegisterClassHandler(typeof(ComboBox),
+                UIElement.GotFocusEvent,
+                new RoutedEventHandler(TextBox_GotFocus));
 
             var window = ServiceProvider.GetRequiredService<MainWindow>();
             window.Show();
 
             base.OnStartup(e);
+        }
+
+        private static void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            switch (sender)
+            {
+                case TextBox textBox:
+                    textBox.SelectAll();
+                    break;
+
+                case ComboBox comboBox when comboBox.IsEditable:
+                    var cbTextBox = comboBox.Template.FindName("PART_EditableTextBox", comboBox) as TextBox;
+                    cbTextBox?.SelectAll();
+                    break;
+            }
         }
 
         protected override async void OnExit(ExitEventArgs e)
