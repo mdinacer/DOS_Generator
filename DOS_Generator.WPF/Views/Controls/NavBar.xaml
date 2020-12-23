@@ -1,0 +1,123 @@
+﻿<UserControl
+    x:Class="DOS_Generator.WPF.Views.Controls.NavBar"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:domain="clr-namespace:DOS_Generator.WPF.Domain"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    mc:Ignorable="d">
+    <materialDesign:ColorZone
+        Margin="20,5"
+        Padding="20,5"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Center"
+        materialDesign:ShadowAssist.ShadowDepth="Depth2"
+        CornerRadius="4"
+        Mode="Dark">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="160" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                Margin="0,0,20,0"
+                VerticalAlignment="Center"
+                FontWeight="Bold">
+                <Run
+                    FontFamily="{StaticResource Montserrat-Bold}"
+                    FontSize="16"
+                    Foreground="Red"
+                    Text="DOS" />
+                <Run FontFamily="{StaticResource Montserrat-Light}" Text="GENERATOR" />
+            </TextBlock>
+            <ListBox
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                materialDesign:ThemeAssist.Theme="Dark"
+                SelectedIndex="0"
+                SelectedValue="{Binding SelectedView, UpdateSourceTrigger=PropertyChanged}"
+                SelectedValuePath="Content">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="domain:ViewItem">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                Margin="5,0"
+                                VerticalAlignment="Center"
+                                Kind="{Binding Icon}" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{Binding Title}"
+                                TextAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+                <ListBox.ItemContainerStyle>
+                    <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListBoxItem">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="BorderThickness" Value="0,0,0,2" />
+                            </Trigger>
+                        </Style.Triggers>
+                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryHueLightBrush}" />
+                    </Style>
+                </ListBox.ItemContainerStyle>
+
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="1" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+                <domain:ViewItem Title="PERMANENCE" Icon="ShieldAccount" />
+
+                <domain:ViewItem Title="MODEL" Icon="FormatListCheckbox" />
+
+                <domain:ViewItem Title="ACTIVITIES" Icon="History" />
+
+                <domain:ViewItem Title="SETTINGS" Icon="Settings" />
+
+
+
+            </ListBox>
+
+            <Grid Column="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <materialDesign:PackIcon
+                    Width="28"
+                    Height="28"
+                    VerticalAlignment="Center"
+                    Kind="Account" />
+                <TextBlock
+                    Grid.Column="1"
+                    Margin="5,0,10,0"
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource Montserrat-Regular}"
+                    FontSize="18"
+                    Text="{Binding UserName}" />
+                <Button
+                    Grid.Column="2"
+                    Click="ButtonBase_OnClick"
+                    Content="{materialDesign:PackIcon LocationExit,
+                                                      Size=24}"
+                    Foreground="Red"
+                    Style="{StaticResource ToolButton}"
+                    ToolTip="Logout" />
+            </Grid>
+        </Grid>
+    </materialDesign:ColorZone>
+</UserControl>

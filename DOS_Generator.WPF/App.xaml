@@ -22,6 +22,17 @@
             <FontFamily x:Key="Montserrat-Regular">./Resources/Fonts/#Montserrat Regular</FontFamily>
             <FontFamily x:Key="Montserrat-Bold">./Resources/Fonts/#Montserrat Bold</FontFamily>
             <FontFamily x:Key="Montserrat-Light">./Resources/Fonts/#Montserrat Light</FontFamily>
+
+            <Style
+                x:Key="ToolButton"
+                BasedOn="{StaticResource MaterialDesignToolForegroundButton}"
+                TargetType="Button">
+                <Setter Property="Height" Value="auto" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

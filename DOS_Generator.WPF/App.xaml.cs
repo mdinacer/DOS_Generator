@@ -2,7 +2,9 @@
 using System.IO;
 using System.Windows;
 using DOS_Generator.Core;
+using DOS_Generator.Core.Models;
 using DOS_Generator.Data;
+using DOS_Generator.WPF.Domain;
 using DOS_Generator.WPF.Services;
 using DOS_Generator.WPF.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +19,8 @@ namespace DOS_Generator.WPF
     /// </summary>
     public partial class App
     {
+        public static User User { get; set; }
+        public static AppSettings Settings { get; private set; }
         private readonly IHost _host;
 
         public App()
