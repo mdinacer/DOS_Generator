@@ -33,7 +33,6 @@
 
   <ItemGroup>
     <Folder Include="Database\" />
-    <Folder Include="Domain\" />
     <Folder Include="Helpers\" />
     <Folder Include="ViewModels\Activities\" />
     <Folder Include="ViewModels\Dialogs\" />
