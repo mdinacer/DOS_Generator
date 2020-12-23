@@ -1,0 +1,349 @@
+﻿<UserControl
+    x:Class="DOS_Generator.WPF.Views.Template.DeclarationTemplateView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:template="clr-namespace:DOS_Generator.WPF.ViewModels.Template"
+    d:DataContext="{Binding Source={StaticResource Locator}, Path=DeclarationTemplateViewModel}"
+    d:DesignHeight="768"
+    d:DesignWidth="1360"
+    Loaded="OnLoaded"
+    Unloaded="OnUnloaded"
+    mc:Ignorable="d">
+
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style BasedOn="{StaticResource ToolButton}" TargetType="Button" />
+            <Style
+                x:Key="SecondaryTitleTextStyle"
+                BasedOn="{StaticResource TitleTextStyle}"
+                TargetType="TextBlock">
+                <Setter Property="FontSize" Value="18" />
+            </Style>
+
+            <Style BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}" TargetType="TextBox">
+                <Setter Property="Width" Value="350" />
+                <Setter Property="Margin" Value="20,10" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+            </Style>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.ColumnSpan="3" Style="{StaticResource TitleTextStyle}">
+            DECLARATION TEMPLATE
+        </TextBlock>
+
+        <Border
+            Grid.Row="2"
+            Grid.Column="1"
+            Width="1"
+            Margin="20,0"
+            Background="{DynamicResource MaterialDesignDivider}"
+            UseLayoutRounding="True" />
+
+        <Grid
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="0,0,20,0">
+            <Grid.Resources>
+                <Style BasedOn="{StaticResource MaterialDesignToolForegroundButton}" TargetType="Button">
+                    <Setter Property="Height" Value="38" />
+                    <Setter Property="Width" Value="38" />
+                    <Setter Property="Padding" Value="5" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Margin="20,5,20,5" Style="{StaticResource SecondaryTitleTextStyle}">DECLARATION CHECKPOINTS</TextBlock>
+            <Button
+                Grid.Column="1"
+                Command="{Binding SaveEntriesCommand}"
+                Content="{materialDesign:PackIcon Kind=ContentSave,
+                                                  Size=24}"
+                ToolTip="Save changes" />
+
+            <Button
+                Grid.Column="2"
+                Command="{Binding ReloadEntriesCommand}"
+                Content="{materialDesign:PackIcon Kind=Refresh,
+                                                  Size=24}"
+                ToolTip="Reload defaults" />
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                Margin="20,5,20,5"
+                VerticalAlignment="Bottom"
+                Style="{StaticResource SecondaryTitleTextStyle}">
+                CONTACT INFORMATION
+            </TextBlock>
+
+            <Button
+                Grid.Column="1"
+                Command="{Binding SaveContactsCommand}"
+                Content="{materialDesign:PackIcon Kind=ContentSave,
+                                                  Size=24}"
+                ToolTip="Save changes" />
+
+            <Button
+                Grid.Column="2"
+                Command="{Binding ReloadContactsCommand}"
+                Content="{materialDesign:PackIcon Kind=Refresh,
+                                                  Size=24}"
+                ToolTip="Reload defaults" />
+            <Button
+                Grid.Column="3"
+                Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                Content="{materialDesign:PackIcon Kind=PrintPreview,
+                                                  Size=24}"
+                ToolTip="Preview">
+                <Button.CommandParameter>
+                    <StackPanel>
+                        <Button
+                            Margin="5"
+                            HorizontalAlignment="Right"
+                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                            Content="{materialDesign:PackIcon Close,
+                                                              Size=26}"
+                            Style="{StaticResource MaterialDesignToolForegroundButton}"
+                            ToolTip="Close" />
+                        <TextBlock Margin="20,10">Preview</TextBlock>
+                        <TextBlock
+                            Margin="20,10,20,0"
+                            FontSize="12"
+                            Text="Port Facility Security Officer" />
+                        <TextBlock
+                            Margin="20,0,20,10"
+                            FontFamily="{StaticResource Montserrat-Regular}"
+                            FontSize="15"
+                            Text="{Binding SecurityOfficerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <Grid Margin="0,0,0,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="250" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontFamily" Value="{StaticResource Montserrat-Regular}" />
+                                    <Setter Property="FontSize" Value="13" />
+                                    <Setter Property="Margin" Value="20,5" />
+                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                </Style>
+                            </Grid.Resources>
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Text="PHONE:" />
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Text="FAX:" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Text="{Binding Fax, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                Text="EMAIL:" />
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <TextBlock
+                                Grid.Row="3"
+                                Grid.Column="0"
+                                Text="RADIO:" />
+                            <TextBlock
+                                Grid.Row="3"
+                                Grid.Column="1"
+                                Text="{Binding Radio, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </Grid>
+                    </StackPanel>
+                </Button.CommandParameter>
+
+            </Button>
+        </Grid>
+
+
+
+        <ScrollViewer
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="20,0"
+            HorizontalAlignment="Stretch"
+            VerticalScrollBarVisibility="Auto">
+            <ItemsControl
+                Padding="5"
+                HorizontalContentAlignment="Stretch"
+                Grid.IsSharedSizeScope="True"
+                ItemsSource="{Binding Entries}">
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+
+                        <UniformGrid
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Columns="2"
+                            IsItemsHost="True" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="template:DosEntry">
+                        <materialDesign:Card
+                            Margin="2"
+                            Padding="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="materialDesign:PackIcon">
+                                        <Setter Property="Height" Value="26" />
+                                        <Setter Property="Width" Value="26" />
+                                    </Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Margin" Value="20,10" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                        <Setter Property="HorizontalAlignment" Value="Left" />
+                                    </Style>
+                                </Grid.Resources>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition SharedSizeGroup="IndexCol" />
+                                    <ColumnDefinition Width="250" />
+                                    <ColumnDefinition SharedSizeGroup="IndexCol" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition SharedSizeGroup="ItemHeight" />
+                                </Grid.RowDefinitions>
+
+                                <materialDesign:ColorZone VerticalAlignment="Stretch" Mode="Dark">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontSize="22"
+                                        Text="{Binding Index}" />
+                                </materialDesign:ColorZone>
+                                <TextBlock
+                                    Grid.Column="1"
+                                    FontSize="13"
+                                    Text="{Binding Text}"
+                                    TextWrapping="Wrap" />
+                                <ToggleButton
+                                    Grid.Column="2"
+                                    Margin="0"
+                                    Padding="0"
+                                    HorizontalAlignment="Center"
+                                    Background="Transparent"
+                                    IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Style="{StaticResource MaterialDesignActionToggleButton}">
+                                    <materialDesign:PackIcon Kind="Close" />
+                                </ToggleButton>
+                            </Grid>
+                        </materialDesign:Card>
+
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <Grid
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="20,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom">
+            <Grid.Resources>
+                <Style TargetType="materialDesign:PackIcon">
+                    <Setter Property="Height" Value="22" />
+                    <Setter Property="Width" Value="22" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                    <Setter Property="Margin" Value="10,10,0,10" />
+                </Style>
+
+                <Style TargetType="TextBlock">
+                    <Setter Property="Margin" Value="0,10,10,10" />
+                    <Setter Property="FontSize" Value="12" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                    <Setter Property="FontFamily" Value="{StaticResource Montserrat-Light}" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <materialDesign:PackIcon Kind="Check" />
+            <materialDesign:PackIcon Grid.Column="2" Kind="Close" />
+            <TextBlock Grid.Column="1">YES (INITIALS)</TextBlock>
+            <TextBlock Grid.Column="3">NO (N/A)</TextBlock>
+        </Grid>
+
+        <materialDesign:Card
+            Grid.Row="2"
+            Grid.Column="2"
+            Margin="20,10"
+            Padding="20,50"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            materialDesign:ShadowAssist.ShadowDepth="Depth1">
+            <StackPanel>
+                <StackPanel>
+                    <TextBox
+                        HorizontalAlignment="Stretch"
+                        materialDesign:HintAssist.Hint="Port Facility Security Officer"
+                        Text="{Binding SecurityOfficerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox materialDesign:HintAssist.Hint="PHONE" Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox materialDesign:HintAssist.Hint="FAX" Text="{Binding Fax, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox materialDesign:HintAssist.Hint="EMAIL" Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox materialDesign:HintAssist.Hint="RADIO" Text="{Binding Radio, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </StackPanel>
+        </materialDesign:Card>
+    </Grid>
+</UserControl>
