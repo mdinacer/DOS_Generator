@@ -12,7 +12,7 @@
     mc:Ignorable="d">
 
 
-    <materialDesign:DialogHost CloseOnClickAway="True" Identifier="RootDialogHost">
+    <materialDesign:DialogHost CloseOnClickAway="False" Identifier="RootDialogHost">
         <materialDesign:DialogHost.CloseOnClickAwayParameter>
             <system:Boolean>False</system:Boolean>
         </materialDesign:DialogHost.CloseOnClickAwayParameter>

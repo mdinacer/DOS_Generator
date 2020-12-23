@@ -98,7 +98,7 @@ namespace DOS_Generator.WPF.ViewModels.Forms
             user.Officer.Phone = Phone;
             user.Officer.Email = Email;
             user.Officer.Initials = Initials;
-            user.Officer.TemplatePath = TemplatePath;
+            user.Officer.TemplatePath = SetTemplate();
         }
 
         private Officer CreateOfficer()
@@ -148,9 +148,10 @@ namespace DOS_Generator.WPF.ViewModels.Forms
             if (!Directory.Exists(".\\Resources\\"))
                 Directory.CreateDirectory(".\\Resources\\");
 
-            var outputFile = $".\\Resources\\{Path.GetRandomFileName()}";
+            var outputFile = $".\\Resources\\{Path.GetRandomFileName()}{Path.GetExtension(TemplatePath)}";
             //File.Copy(TemplatePath, outputFile);
-            EncryptionService.EncryptFile(UserName, TemplatePath, outputFile);
+            var userName = IsEdit ? App.User.Name : UserName;
+            EncryptionService.EncryptFile(userName, TemplatePath, outputFile);
             return outputFile;
         }
 

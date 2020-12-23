@@ -81,6 +81,19 @@ namespace DOS_Generator.WPF.Services
                     await streamWriter.WriteAsync(docText);
                 }
 
+                #region Stamp
+
+                if (!string.IsNullOrEmpty(declaration.Officer.TemplatePath) &&
+                    File.Exists(declaration.Officer.TemplatePath))
+                {
+                    var sourceFile = declaration.Officer.TemplatePath;
+                    var tempFile = $".\\Resources\\stamp{Path.GetExtension(sourceFile)}";
+                    EncryptionService.DecryptFile(App.User.Name, sourceFile, tempFile);
+                    await ReplaceImage(document, tempFile, "image1.png");
+                }
+
+                #endregion
+
                 #region Table
 
                 var table = document.MainDocumentPart.Document.Body.Elements<Table>().ElementAt(2);
@@ -155,7 +168,7 @@ namespace DOS_Generator.WPF.Services
                 {"SecurityLevelField", declaration.SecLevel},
                 {"SignatureTimeField", DateTime.Now.ToString("HH:mm")},
                 {"SignatureDateField", DateTime.Today.ToString("dd/MM/yyyy")},
-                {"OfficerNameField", declaration.Officer.FirstName},
+                {"OfficerNameField", declaration.Officer.FullName},
                 {"OfficerTitleField", declaration.Officer.Title},
                 {"PFSONameField", currentConfig.SecurityOfficerName},
                 {"PhoneField", currentConfig.Phone},
@@ -163,6 +176,23 @@ namespace DOS_Generator.WPF.Services
                 {"EmailField", currentConfig.Email},
                 {"RadioField", currentConfig.Radio}
             };
+        }
+
+        private static async Task ReplaceImage(WordprocessingDocument document, string source, string destination)
+        {
+            if(!File.Exists(source)) return;
+
+            var sourceImage = await File.ReadAllBytesAsync(source);
+            var outputImage = document.MainDocumentPart.ImageParts // or EndsWith
+                .First(p => p.Uri.ToString().Contains(destination));
+
+            if(outputImage == null) return;
+
+            await using (var writer = new BinaryWriter(outputImage.GetStream()))
+            {
+                writer.Write(sourceImage);
+            }
+            File.Delete(source);
         }
 
         public static void ConvertWordToHtml(string input, string output)

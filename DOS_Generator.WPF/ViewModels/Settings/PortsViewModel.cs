@@ -150,7 +150,7 @@ namespace DOS_Generator.WPF.ViewModels.Settings
         private async void AddNewFacility(Port port)
         {
             if (port == null) return;
-            var facility = new Facility();
+            var facility = new Facility{PortId = port.Id};
 
             var isOk = (bool) await DialogHost.Show(new NameEditControl { DataContext = facility});
 

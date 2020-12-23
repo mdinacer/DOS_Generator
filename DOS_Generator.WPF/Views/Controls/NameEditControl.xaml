@@ -6,6 +6,8 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:system="clr-namespace:System;assembly=System.Runtime"
+    FontFamily="{StaticResource Montserrat-Regular}"
+    FontSize="14"
     mc:Ignorable="d">
 
 
@@ -22,6 +24,7 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <TextBox
+            Width="250"
             Margin="20,10,5,10"
             VerticalAlignment="Center"
             materialDesign:HintAssist.Hint="Name"

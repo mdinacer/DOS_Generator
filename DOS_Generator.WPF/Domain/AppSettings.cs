@@ -8,7 +8,7 @@
         public string Email { get; set; } = "Undefined";
         public string Radio { get; set; } = "Undefined";
         public string GeneratedDeclarationsPath { get; set; } = ".\\Declarations\\"; // Set default path for generated Declarations.
-        public string TemplatePath { get; set; } = ".\\Resources\\"; // Set default path for the template file.
+        public string TemplatePath { get; set; } = ".\\Resources\\template.docx"; // Set default path for the template file.
         public bool[] DefaultEntries { get; set; } = new bool[11];
     }
 }
