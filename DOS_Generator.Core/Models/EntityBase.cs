@@ -1,3 +1,5 @@
+using PropertyChanged;
+
 namespace DOS_Generator.Core.Models
 {
     [AddINotifyPropertyChangedInterface]
