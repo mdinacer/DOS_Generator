@@ -19,6 +19,9 @@
 
             <services:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
 
+            <SolidColorBrush x:Key="GreenColor" Color="#2ecc71" />
+            <SolidColorBrush x:Key="RedColor" Color="#e74c3c" />
+
             <FontFamily x:Key="Montserrat-Regular">./Resources/Fonts/#Montserrat Regular</FontFamily>
             <FontFamily x:Key="Montserrat-Bold">./Resources/Fonts/#Montserrat Bold</FontFamily>
             <FontFamily x:Key="Montserrat-Light">./Resources/Fonts/#Montserrat Light</FontFamily>

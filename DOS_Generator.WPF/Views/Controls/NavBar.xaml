@@ -32,7 +32,7 @@
                 <Run
                     FontFamily="{StaticResource Montserrat-Bold}"
                     FontSize="16"
-                    Foreground="Red"
+                    Foreground="{StaticResource RedColor}"
                     Text="DOS" />
                 <Run FontFamily="{StaticResource Montserrat-Light}" Text="GENERATOR" />
             </TextBlock>
@@ -114,7 +114,7 @@
                     Click="ButtonBase_OnClick"
                     Content="{materialDesign:PackIcon LocationExit,
                                                       Size=24}"
-                    Foreground="Red"
+                    Foreground="{StaticResource RedColor}"
                     Style="{StaticResource ToolButton}"
                     ToolTip="Logout" />
             </Grid>
