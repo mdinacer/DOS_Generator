@@ -2,8 +2,9 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>security.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,7 +37,6 @@
     <Folder Include="Helpers\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Views\" />
-    <Folder Include="Resources\" />
   </ItemGroup>
 
   <ItemGroup>
