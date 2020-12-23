@@ -35,7 +35,20 @@
     <Folder Include="Database\" />
     <Folder Include="Domain\" />
     <Folder Include="Helpers\" />
-    <Folder Include="Views\" />
+    <Folder Include="ViewModels\Activities\" />
+    <Folder Include="ViewModels\Dialogs\" />
+    <Folder Include="ViewModels\Forms\" />
+    <Folder Include="ViewModels\Permanence\" />
+    <Folder Include="ViewModels\Settings\" />
+    <Folder Include="ViewModels\Template\" />
+    <Folder Include="ViewModels\Wizard\" />
+    <Folder Include="Views\Activities\" />
+    <Folder Include="Views\Forms\" />
+    <Folder Include="Views\Dialogs\" />
+    <Folder Include="Views\Wizard\" />
+    <Folder Include="Views\Settings\" />
+    <Folder Include="Views\Template\" />
+    <Folder Include="Views\Permanence\" />
   </ItemGroup>
 
   <ItemGroup>
