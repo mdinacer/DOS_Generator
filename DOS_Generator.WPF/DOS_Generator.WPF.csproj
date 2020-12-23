@@ -35,7 +35,6 @@
     <Folder Include="Database\" />
     <Folder Include="Domain\" />
     <Folder Include="Helpers\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="Views\" />
   </ItemGroup>
 

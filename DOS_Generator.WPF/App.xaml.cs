@@ -4,6 +4,7 @@ using System.Windows;
 using DOS_Generator.Core;
 using DOS_Generator.Data;
 using DOS_Generator.WPF.Services;
+using DOS_Generator.WPF.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,6 +42,7 @@ namespace DOS_Generator.WPF
                     x => x.MigrationsAssembly("Security.Data")));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddSingleton<MainWindowViewModel>();
             services.AddTransient<MainWindow>();
         }
 
