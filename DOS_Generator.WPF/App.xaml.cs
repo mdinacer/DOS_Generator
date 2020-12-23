@@ -47,7 +47,7 @@ namespace DOS_Generator.WPF
         }
 
         public static User User { get; set; }
-        public static AppSettings Settings { get; private set; }
+        public static AppSettings Settings { get; set; }
         public static Messenger Messenger { get; private set; }
 
         public static IServiceProvider ServiceProvider { get; private set; }

@@ -13,11 +13,7 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <CollectionViewSource x:Key="Ports" Source="{Binding Ports}">
-            <CollectionViewSource.SortDescriptions>
-                <componentModel:SortDescription PropertyName="Name" />
-            </CollectionViewSource.SortDescriptions>
-        </CollectionViewSource>
+       
 
         <Style TargetType="materialDesign:PackIcon">
             <Setter Property="Height" Value="22" />
@@ -63,7 +59,7 @@
                 </Button>
             </Grid>
             <ScrollViewer Grid.Row="1">
-                <ItemsControl ItemsSource="{Binding Source={StaticResource Ports}}">
+                <ItemsControl ItemsSource="{Binding Ports}">
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="models:Port">

@@ -147,6 +147,7 @@ namespace DOS_Generator.WPF.ViewModels.Template
             if (entries != _settings.DefaultEntries)
                 _settings.DefaultEntries = entries;
             AppSettingsServices.WriteSettings(_settings);
+            App.Settings = _settings;
         }
 
         private void SaveContactsSettings()
@@ -166,6 +167,7 @@ namespace DOS_Generator.WPF.ViewModels.Template
             if (!Radio.Equals(_settings.Radio))
                 _settings.Radio = Radio;
             AppSettingsServices.WriteSettings(_settings);
+            App.Settings = _settings;
         }
 
         #endregion

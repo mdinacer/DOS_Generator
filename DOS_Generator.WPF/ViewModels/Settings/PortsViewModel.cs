@@ -113,8 +113,8 @@ namespace DOS_Generator.WPF.ViewModels.Settings
         {
             if (item == null) return;
 
-            var isOk = (bool) await DialogHost.Show(new ConfirmationDialog("Attention",
-                "This element and all its related entries will be permanently delete, Proceed?"));
+            var isOk = (bool) await DialogHost.Show(new ConfirmationDialog(
+                "This element and all its related entries will be permanently delete, Proceed?", "Attention"));
 
             if (!isOk) return;
             switch (item)
@@ -132,6 +132,7 @@ namespace DOS_Generator.WPF.ViewModels.Settings
             }
 
             await _unitOfWork.CommitAsync();
+            _ports?.Refresh();
         }
 
         private async void AddNewPort()
@@ -150,11 +151,12 @@ namespace DOS_Generator.WPF.ViewModels.Settings
         private async void AddNewFacility(Port port)
         {
             if (port == null) return;
-            var facility = new Facility{PortId = port.Id};
+            var facility = new Facility{};
 
             var isOk = (bool) await DialogHost.Show(new NameEditControl { DataContext = facility});
 
             if (!isOk) return;
+            await _unitOfWork.Facilities.AddAsync(facility);
             port.Facilities.Add(facility);
             await _unitOfWork.CommitAsync();
         }

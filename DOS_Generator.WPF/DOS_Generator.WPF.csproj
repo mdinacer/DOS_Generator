@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Fonts\Montserrat-Bold.ttf" />
+    <None Remove="Resources\Fonts\Montserrat-Light.ttf" />
+    <None Remove="Resources\Fonts\Montserrat-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BCrypt-Official" Version="0.1.109" />
     <PackageReference Include="DocumentFormat.OpenXml" Version="2.12.0" />
     <PackageReference Include="Fody" Version="6.3.0">
@@ -39,6 +45,18 @@
     <Folder Include="ViewModels\Controls\" />
     <Folder Include="ViewModels\Wizard\" />
     <Folder Include="Views\Wizard\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Fonts\Montserrat-Bold.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Montserrat-Light.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Montserrat-Regular.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

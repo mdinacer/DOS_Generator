@@ -104,14 +104,14 @@
                     </ItemsControl.ItemContainerStyle>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="models:Ship">
-                            <materialDesign:ColorZone
+                            <materialDesign:Card
                                 Width="350"
                                 Height="285"
                                 Margin="5"
                                 Padding="0,10"
                                 HorizontalAlignment="Left"
                                 materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                CornerRadius="4"
+                                UniformCornerRadius="4"
                                 SnapsToDevicePixels="True">
 
                                 <Grid>
@@ -272,7 +272,7 @@
 
                                 </Grid>
 
-                            </materialDesign:ColorZone>
+                            </materialDesign:Card>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

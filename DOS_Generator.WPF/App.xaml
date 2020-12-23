@@ -26,6 +26,8 @@
             <FontFamily x:Key="Montserrat-Bold">./Resources/Fonts/#Montserrat Bold</FontFamily>
             <FontFamily x:Key="Montserrat-Light">./Resources/Fonts/#Montserrat Light</FontFamily>
 
+            <Style BasedOn="{StaticResource MaterialDesignScrollBarMinimal}" TargetType="ScrollBar" />
+
             <Style
                 x:Key="ToolButton"
                 BasedOn="{StaticResource MaterialDesignToolForegroundButton}"
@@ -54,6 +56,18 @@
                 <Setter Property="FontSize" Value="22" />
                 <Setter Property="FontFamily" Value="{StaticResource Montserrat-Bold}" />
                 <Setter Property="TextAlignment" Value="Center" />
+            </Style>
+
+            <Style BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}" TargetType="{x:Type TextBox}">
+                <Setter Property="Margin" Value="10" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="Width" Value="200" />
+            </Style>
+
+            <Style BasedOn="{StaticResource MaterialDesignFloatingHintComboBox}" TargetType="{x:Type ComboBox}">
+                <Setter Property="Margin" Value="10" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="Width" Value="200" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>
