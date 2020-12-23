@@ -36,6 +36,18 @@
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
             </Style>
+
+            <Style
+                x:Key="OutlinedButton"
+                BasedOn="{StaticResource MaterialDesignOutlinedButton}"
+                TargetType="{x:Type Button}">
+                <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="4" />
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="Margin" Value="0,5" />
+                <Setter Property="Padding" Value="5" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Bottom" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

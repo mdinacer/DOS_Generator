@@ -1,0 +1,71 @@
+﻿<UserControl
+    x:Class="DOS_Generator.WPF.Views.Dialogs.ConfirmationDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style BasedOn="{StaticResource OutlinedButton}" TargetType="{x:Type Button}">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Width" Value="100" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock
+            Margin="20"
+            FontFamily="{StaticResource Montserrat-Regular}"
+            FontSize="22"
+            Text="{Binding Title, FallbackValue='TITLE'}"
+            TextAlignment="Center" />
+
+        <TextBlock
+            Grid.Row="1"
+            MaxWidth="500"
+            Margin="20"
+            FontFamily="{StaticResource Montserrat-Regular}"
+            FontSize="14"
+            Text="{Binding Message, FallbackValue='Message'}"
+            TextWrapping="Wrap" />
+
+        <Grid
+            Grid.Row="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button
+                Grid.Column="0"
+                Margin="20,10,5,10"
+                HorizontalAlignment="Center"
+                Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                Content="YES"
+                IsDefault="True">
+                <Button.CommandParameter>
+                    <system:Boolean>True</system:Boolean>
+                </Button.CommandParameter>
+            </Button>
+            <Button
+                Grid.Column="1"
+                Margin="5,10,20,10"
+                HorizontalAlignment="Center"
+                Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                Content="NO"
+                IsCancel="True">
+                <Button.CommandParameter>
+                    <system:Boolean>False</system:Boolean>
+                </Button.CommandParameter>
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>
