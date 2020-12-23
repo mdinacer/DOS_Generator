@@ -1,0 +1,171 @@
+﻿<UserControl
+    x:Class="DOS_Generator.WPF.Views.Forms.LoginForm"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:forms="clr-namespace:DOS_Generator.WPF.ViewModels.Forms"
+    mc:Ignorable="d">
+    <d:UserControl.DataContext>
+        <forms:LoginFormViewModel />
+    </d:UserControl.DataContext>
+    <materialDesign:DialogHost CloseOnClickAway="False" Identifier="LoginFormDialogHost">
+        <Grid>
+            <Grid.Effect>
+                <BlurEffect Radius="0" />
+            </Grid.Effect>
+            <materialDesign:Card
+                Width="475"
+                Height="475"
+                Padding="40"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                UniformCornerRadius="25">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        Margin="20"
+                        FontFamily="{StaticResource Montserrat-Bold}"
+                        FontSize="52"
+                        Text="LOG IN"
+                        TextAlignment="Center" />
+
+
+
+                    <materialDesign:ColorZone
+                        Grid.Row="1"
+                        Margin="10,20"
+                        Padding="40,20"
+                        BorderBrush="{DynamicResource MaterialDesignDivider}"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        UseLayoutRounding="True">
+                        <StackPanel>
+                            <TextBox
+                                Width="250"
+                                Margin="20,10"
+                                materialDesign:HintAssist.IsFloating="True"
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation=" Horizontal">
+                                        <materialDesign:PackIcon Margin="0,0,5,0" Kind="Account" />
+                                        <TextBlock Text="User Name" />
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </TextBox>
+
+                            <PasswordBox
+                                Width="250"
+                                Margin="20,10"
+                                PasswordChanged="PasswordBox_OnPasswordChanged"
+                                Style="{StaticResource MaterialDesignFloatingHintPasswordBox}">
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation=" Horizontal">
+                                        <materialDesign:PackIcon Margin="0,0,5,0" Kind="AccountKey" />
+                                        <TextBlock Text="Password" />
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </PasswordBox>
+
+                            <TextBlock
+                                Margin="5"
+                                FontFamily="{StaticResource Montserrat-Light}"
+                                FontSize="10"
+                                Foreground="Red"
+                                Text="{Binding ErrorMessage, UpdateSourceTrigger=PropertyChanged}"
+                                TextAlignment="Center" />
+                        </StackPanel>
+                    </materialDesign:ColorZone>
+
+                    <materialDesign:ColorZone
+                        Grid.Row="2"
+                        Margin="10,0,10,10"
+                        Padding="10,0"
+                        BorderBrush="{DynamicResource MaterialDesignDivider}"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        UseLayoutRounding="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="85*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="101*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="84*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.Resources>
+                                <Style BasedOn="{StaticResource ToolButton}" TargetType="Button" />
+                                <Style TargetType="materialDesign:PackIcon">
+                                    <Setter Property="Height" Value="24" />
+                                    <Setter Property="Width" Value="24" />
+                                    <Setter Property="Margin" Value="5" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontFamily" Value="{StaticResource Montserrat-Regular}" />
+                                    <Setter Property="FontSize" Value="12" />
+                                    <Setter Property="Margin" Value="5,5,5,0" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </Grid.Resources>
+                            <Button
+                                Grid.Column="0"
+                                Command="{Binding LoginCommand}"
+                                IsDefault="True">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Login" />
+                                        <TextBlock>Log in</TextBlock>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+
+                            <Border
+                                Grid.Column="1"
+                                Width="1"
+                                Margin="5,0"
+                                Background="{DynamicResource MaterialDesignDivider}"
+                                UseLayoutRounding="True" />
+
+                            <Button Grid.Column="2" Command="{Binding AddUserCommand}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="UserAdd" />
+                                        <TextBlock>New user</TextBlock>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+
+                            <Border
+                                Grid.Column="3"
+                                Width="1"
+                                Margin="5,0"
+                                Background="{DynamicResource MaterialDesignDivider}"
+                                UseLayoutRounding="True" />
+                            <Button
+                                Grid.Column="4"
+                                Command="{Binding ExitCommand}"
+                                IsCancel="True">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="LocationExit" />
+                                        <TextBlock>Exit</TextBlock>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </Grid>
+                    </materialDesign:ColorZone>
+                </Grid>
+            </materialDesign:Card>
+        </Grid>
+    </materialDesign:DialogHost>
+</UserControl>

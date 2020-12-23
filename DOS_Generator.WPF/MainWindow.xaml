@@ -5,9 +5,23 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:DOS_Generator.WPF"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="MainWindow"
-    Width="800"
-    Height="450"
+    xmlns:viewModels="clr-namespace:DOS_Generator.WPF.ViewModels"
+    Title="DOS Generator"
+    Width="1360"
+    Height="768"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="{StaticResource Montserrat-Regular}"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    UseLayoutRounding="True"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid />
+
+    <Window.DataContext>
+        <viewModels:MainWindowViewModel />
+    </Window.DataContext>
+    <ContentControl Content="{Binding View, UpdateSourceTrigger=PropertyChanged}" />
 </Window>
