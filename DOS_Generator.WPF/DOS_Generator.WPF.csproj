@@ -39,13 +39,11 @@
     <Folder Include="ViewModels\Activities\" />
     <Folder Include="ViewModels\Dialogs\" />
     <Folder Include="ViewModels\Controls\" />
-    <Folder Include="ViewModels\Permanence\" />
     <Folder Include="ViewModels\Settings\" />
     <Folder Include="ViewModels\Wizard\" />
     <Folder Include="Views\Activities\" />
     <Folder Include="Views\Wizard\" />
     <Folder Include="Views\Settings\" />
-    <Folder Include="Views\Permanence\" />
   </ItemGroup>
 
   <ItemGroup>

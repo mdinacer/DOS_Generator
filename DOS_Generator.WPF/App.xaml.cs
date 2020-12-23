@@ -7,6 +7,7 @@ using DOS_Generator.Data;
 using DOS_Generator.WPF.Domain;
 using DOS_Generator.WPF.Services;
 using DOS_Generator.WPF.ViewModels;
+using DOS_Generator.WPF.ViewModels.Permanence;
 using DOS_Generator.WPF.ViewModels.Template;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -49,6 +50,7 @@ namespace DOS_Generator.WPF
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<DeclarationTemplateViewModel>();
+            services.AddScoped<PermanenceViewModel>();
             services.AddTransient<MainWindow>();
         }
 
