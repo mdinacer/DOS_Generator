@@ -60,7 +60,7 @@
                     BorderThickness="1"
                     CornerRadius="8"
                     UseLayoutRounding="True">
-                    <Grid DataContext="{Binding Officer}">
+                    <Grid DataContext="{Binding User}">
                         <Grid.Resources>
                             <Style TargetType="TextBlock">
                                 <Setter Property="FontFamily" Value="{StaticResource Montserrat-Regular}" />
@@ -106,11 +106,11 @@
                         <TextBlock
                             Grid.Row="0"
                             Grid.Column="1"
-                            Text="{Binding Address, TargetNullValue='empty'}" />
+                            Text="{Binding Officer.Address, TargetNullValue='empty'}" />
                         <TextBlock
                             Grid.Row="1"
                             Grid.Column="1"
-                            Text="{Binding Phone, TargetNullValue='empty'}" />
+                            Text="{Binding Officer.Phone, TargetNullValue='empty'}" />
                         <TextBlock
                             Grid.Row="2"
                             Grid.Column="1"
@@ -118,12 +118,12 @@
                         <TextBlock
                             Grid.Row="3"
                             Grid.Column="1"
-                            Text="{Binding Initials, TargetNullValue='empty'}" />
+                            Text="{Binding Officer.Initials, TargetNullValue='empty'}" />
 
                         <TextBlock
                             Grid.Row="4"
                             Grid.Column="1"
-                            Text="{Binding Declarations.Count}" />
+                            Text="{Binding Officer.Declarations.Count}" />
                     </Grid>
                 </materialDesign:ColorZone>
 
@@ -177,7 +177,7 @@
                             </Button.Content>
                         </Button>
 
-                        <Button Grid.Column="2" Command="{Binding AddNewShipCommand}">
+                        <Button Grid.Column="2" Command="{Binding DeleteAccountCommand}">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="AccountRemove" />

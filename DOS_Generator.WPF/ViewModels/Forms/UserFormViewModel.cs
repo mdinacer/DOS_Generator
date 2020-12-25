@@ -26,6 +26,9 @@ namespace DOS_Generator.WPF.ViewModels.Forms
 
         public string UserName { get; set; }
         public string UserPassword { get; set; }
+        public string Email { get; set; }
+        public string EmailPassword { get; set; }
+        public bool IsUsePersonnelEmail { get; set; }
 
         #region Officer
 
@@ -34,7 +37,6 @@ namespace DOS_Generator.WPF.ViewModels.Forms
         public string Title { get; set; }
         public string Phone { get; set; }
         public string Address { get; set; }
-        public string Email { get; set; }
         public string Initials { get; set; }
         public string TemplatePath { get; set; }
 
@@ -76,27 +78,38 @@ namespace DOS_Generator.WPF.ViewModels.Forms
             if (user == null) return;
             IsEdit = true;
             UserName = UserName;
+            Email = user.Email;
+            IsUsePersonnelEmail = user.IsUsePersonalEmail;
 
             FirstName = user.Officer.FirstName;
             LastName = user.Officer.LastName;
             Title = user.Officer.Title;
             Address = user.Officer.Address;
             Phone = user.Officer.Phone;
-            Email = user.Email;
             Initials = user.Officer.Initials;
             TemplatePath = user.Officer.TemplatePath;
+        }
+
+        private byte[] SetEmailPassword()
+        {
+            if (string.IsNullOrEmpty(EmailPassword)) return null;
+            var encodedPassword = DataProtectionService.EncodeString(EmailPassword);
+            return DataProtectionService.Protect(encodedPassword);
         }
 
         public void UpdateUser(User user)
         {
             if (user == null) return;
             UserName = UserName;
+            user.Email = Email;
+            user.IsUsePersonalEmail = IsUsePersonnelEmail;
+            user.EmailPassword = SetEmailPassword();
+
             user.Officer.FirstName = FirstName;
             user.Officer.LastName = LastName;
             user.Officer.Title = Title;
             user.Officer.Address = Address;
             user.Officer.Phone = Phone;
-            user.Email = Email;
             user.Officer.Initials = Initials;
             user.Officer.TemplatePath = SetTemplate();
         }
@@ -123,6 +136,10 @@ namespace DOS_Generator.WPF.ViewModels.Forms
                 Password = UserPassword
             });
 
+            user.Email = Email;
+            user.IsUsePersonalEmail = IsUsePersonnelEmail;
+            user.EmailPassword = SetEmailPassword();
+
             user.Officer = CreateOfficer();
 
             await _unitOfWork.Users.AddAsync(user);
@@ -148,7 +165,6 @@ namespace DOS_Generator.WPF.ViewModels.Forms
                 Directory.CreateDirectory(".\\Resources\\");
 
             var outputFile = $".\\Resources\\{Path.GetRandomFileName()}{Path.GetExtension(TemplatePath)}";
-            //File.Copy(TemplatePath, outputFile);
             var userName = IsEdit ? App.User.Name : UserName;
             EncryptionService.EncryptFile(userName, TemplatePath, outputFile);
             return outputFile;
