@@ -21,6 +21,7 @@ namespace DOS_Generator.Data
         private OfficerRepository _officerRepository;
         private ShipRepository _shipRepository;
         private UserRepository _userRepository;
+        private MailServerRepository _mailServerRepository;
 
         #endregion
 
@@ -33,6 +34,7 @@ namespace DOS_Generator.Data
         public IOfficerRepository Officers => _officerRepository ??= new OfficerRepository(_context);
         public IShipRepository Ships => _shipRepository ??= new ShipRepository(_context);
         public IUserRepository Users => _userRepository ??= new UserRepository(_context);
+        public IMailServerRepository MailServers => _mailServerRepository ??= new MailServerRepository(_context);
 
         #endregion
     }

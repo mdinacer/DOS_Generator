@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using DOS_Generator.Core;
@@ -57,14 +58,12 @@ namespace DOS_Generator.WPF.ViewModels.Forms
         {
             var viewModel = new UserFormViewModel(_unitOfWork);
             var view = new UserFormView {DataContext = viewModel};
-            var isOk = (bool) await DialogHost.Show(view, "LoginFormDialogHost", async (sender, args) =>
+            await DialogHost.Show(view, "LoginFormDialogHost", async (sender, args) =>
             {
-                var hasErrors = viewModel.ValidateFields();
                 var param = (bool) args.Parameter;
-
-                if(!param)
-                    return;
-
+                
+                if (!param) return;
+                var hasErrors = viewModel.ValidateFields();
                 if (hasErrors)
                 {
                     args.Cancel();

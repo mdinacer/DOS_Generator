@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -10,6 +11,8 @@ using DOS_Generator.Core;
 using DOS_Generator.Core.Models;
 using DOS_Generator.WPF.Domain;
 using DOS_Generator.WPF.Services;
+using DOS_Generator.WPF.Views.Forms;
+using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 
 namespace DOS_Generator.WPF.ViewModels.Forms
@@ -19,6 +22,7 @@ namespace DOS_Generator.WPF.ViewModels.Forms
         #region Commands
 
         public ICommand BrowseCommand => new RelayCommand(o => BrowseImage());
+        public ICommand AddNewServerCommand => new RelayCommand(o => AddNewServer());
 
         #endregion
 
@@ -29,6 +33,9 @@ namespace DOS_Generator.WPF.ViewModels.Forms
         public string Email { get; set; }
         public string EmailPassword { get; set; }
         public bool IsUsePersonnelEmail { get; set; }
+
+        public ObservableCollection<MailServer> Servers { get; set; }
+        public MailServer SelectedServer { get; set; }
 
         #region Officer
 
@@ -67,11 +74,39 @@ namespace DOS_Generator.WPF.ViewModels.Forms
         public UserFormViewModel(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+            LoadServers();
         }
 
         #endregion
 
         #region Functions
+
+        private async void LoadServers()
+        {
+            var servers = (await _unitOfWork.MailServers.GetAllAsync())
+                .OrderBy(server => server.ServiceName)
+                .ToList();
+            Servers = servers.Any()
+                ? new ObservableCollection<MailServer>(servers)
+                : new ObservableCollection<MailServer>();
+            AddDefaultServices();
+        }
+
+        private void AddDefaultServices()
+        {
+            var list = new List<MailServer>
+            {
+                new MailServer {ServiceName = "Google Mail", Host = "smtp.gmail.com", Port = 587},
+                new MailServer {ServiceName = "Microsoft Outlook", Host = "smtp.office365.com", Port = 587},
+                new MailServer {ServiceName = "Yahoo Mail", Host = "smtp.mail.yahoo.com", Port = 587},
+            };
+
+            list.ForEach(server =>
+            {
+                if(!Servers.Any(s => s.ServiceName.Equals(server.ServiceName)))
+                    Servers.Add(server);
+            });
+        }
 
         public void LoadUser(User user)
         {
@@ -79,7 +114,6 @@ namespace DOS_Generator.WPF.ViewModels.Forms
             IsEdit = true;
             UserName = UserName;
             Email = user.Email;
-            IsUsePersonnelEmail = user.IsUsePersonalEmail;
 
             FirstName = user.Officer.FirstName;
             LastName = user.Officer.LastName;
@@ -102,7 +136,6 @@ namespace DOS_Generator.WPF.ViewModels.Forms
             if (user == null) return;
             UserName = UserName;
             user.Email = Email;
-            user.IsUsePersonalEmail = IsUsePersonnelEmail;
             user.EmailPassword = SetEmailPassword();
 
             user.Officer.FirstName = FirstName;
@@ -137,7 +170,6 @@ namespace DOS_Generator.WPF.ViewModels.Forms
             });
 
             user.Email = Email;
-            user.IsUsePersonalEmail = IsUsePersonnelEmail;
             user.EmailPassword = SetEmailPassword();
 
             user.Officer = CreateOfficer();
@@ -312,6 +344,26 @@ namespace DOS_Generator.WPF.ViewModels.Forms
             Validate(nameof(TemplatePath));
 
             return HasErrors;
+        }
+
+        private async void AddNewServer()
+        {
+            var server = new MailServer();
+
+            var view = new EmailServerForm{ DataContext =  server};
+
+            var isOk = (bool) await DialogHost.Show(view, "UserFormDialogHost");
+
+            if(!isOk) return;
+
+            if(string.IsNullOrEmpty(server.ServiceName)
+               || string.IsNullOrEmpty(server.Host)
+               || server.Port == 0)
+                return;
+
+            await _unitOfWork.MailServers.AddAsync(server);
+            await _unitOfWork.CommitAsync();
+            Servers.Add(server);
         }
 
         #endregion

@@ -8,5 +8,7 @@
         public byte[] EmailPassword { get; set; }
         public int OfficerId { get; set; }
         public virtual Officer Officer { get; set; }
+        public int? MailServerId { get; set; }
+        public virtual MailServer MailServer { get; set; }
     }
 }

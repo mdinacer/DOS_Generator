@@ -16,7 +16,8 @@ namespace DOS_Generator.WPF.Services
             Host = "smtp.gmail.com",
             Port = 587,
             UseDefaultCredentials = false,
-            EnableSsl = true
+            EnableSsl = true,
+            DeliveryMethod = SmtpDeliveryMethod.Network
         };
 
         public static async Task SendMail(MailMessage mail, NetworkCredential credentials)

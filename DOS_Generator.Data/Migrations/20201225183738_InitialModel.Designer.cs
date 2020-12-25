@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DOS_Generator.Data.Migrations
 {
     [DbContext(typeof(SecurityDbContext))]
-    [Migration("20201223143949_InitialModel")]
+    [Migration("20201225183738_InitialModel")]
     partial class InitialModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -124,6 +124,29 @@ namespace DOS_Generator.Data.Migrations
                     b.ToTable("Facilities");
                 });
 
+            modelBuilder.Entity("DOS_Generator.Core.Models.MailServer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Host")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Port")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ServiceName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MailServers");
+                });
+
             modelBuilder.Entity("DOS_Generator.Core.Models.Officer", b =>
                 {
                     b.Property<int>("Id")
@@ -131,9 +154,6 @@ namespace DOS_Generator.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Address")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Email")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
@@ -216,10 +236,19 @@ namespace DOS_Generator.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("EmailPassword")
+                        .HasColumnType("BLOB");
+
                     b.Property<string>("Hash")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("MailServerId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -229,6 +258,8 @@ namespace DOS_Generator.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MailServerId");
 
                     b.HasIndex("OfficerId");
 
@@ -292,11 +323,17 @@ namespace DOS_Generator.Data.Migrations
 
             modelBuilder.Entity("DOS_Generator.Core.Models.User", b =>
                 {
+                    b.HasOne("DOS_Generator.Core.Models.MailServer", "MailServer")
+                        .WithMany()
+                        .HasForeignKey("MailServerId");
+
                     b.HasOne("DOS_Generator.Core.Models.Officer", "Officer")
                         .WithMany()
                         .HasForeignKey("OfficerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("MailServer");
 
                     b.Navigation("Officer");
                 });

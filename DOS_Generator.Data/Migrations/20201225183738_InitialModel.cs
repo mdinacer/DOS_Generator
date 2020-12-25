@@ -26,6 +26,22 @@ namespace DOS_Generator.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MailServers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ServiceName = table.Column<string>(type: "TEXT", nullable: true),
+                    Host = table.Column<string>(type: "TEXT", nullable: true),
+                    Port = table.Column<int>(type: "INTEGER", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MailServers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Officers",
                 columns: table => new
                 {
@@ -36,7 +52,6 @@ namespace DOS_Generator.Data.Migrations
                     Title = table.Column<string>(type: "TEXT", nullable: true),
                     Phone = table.Column<string>(type: "TEXT", nullable: true),
                     Address = table.Column<string>(type: "TEXT", nullable: true),
-                    Email = table.Column<string>(type: "TEXT", nullable: true),
                     Initials = table.Column<string>(type: "TEXT", nullable: true),
                     TemplatePath = table.Column<string>(type: "TEXT", nullable: true),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false)
@@ -92,12 +107,21 @@ namespace DOS_Generator.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     Hash = table.Column<string>(type: "TEXT", nullable: true),
+                    Email = table.Column<string>(type: "TEXT", nullable: true),
+                    EmailPassword = table.Column<byte[]>(type: "BLOB", nullable: true),
                     OfficerId = table.Column<int>(type: "INTEGER", nullable: false),
+                    MailServerId = table.Column<int>(type: "INTEGER", nullable: true),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_MailServers_MailServerId",
+                        column: x => x.MailServerId,
+                        principalTable: "MailServers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Users_Officers_OfficerId",
                         column: x => x.OfficerId,
@@ -206,6 +230,11 @@ namespace DOS_Generator.Data.Migrations
                 column: "AgencyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Users_MailServerId",
+                table: "Users",
+                column: "MailServerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_OfficerId",
                 table: "Users",
                 column: "OfficerId");
@@ -224,6 +253,9 @@ namespace DOS_Generator.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Ships");
+
+            migrationBuilder.DropTable(
+                name: "MailServers");
 
             migrationBuilder.DropTable(
                 name: "Officers");
