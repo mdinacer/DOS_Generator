@@ -13,6 +13,7 @@ namespace DOS_Generator.Core
         IPortRepository Ports { get; }
         IShipRepository Ships { get; }
         IUserRepository Users { get; }
+        IMailServerRepository MailServers { get; }
         Task<int> CommitAsync();
     }
 }
