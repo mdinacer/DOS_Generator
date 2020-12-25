@@ -10,7 +10,7 @@ namespace DOS_Generator.Core.Models
         public string Title { get; set; }
         public string Phone { get; set; }
         public string Address { get; set; }
-        public string Email { get; set; }
+        
         public string Initials { get; set; }
         public string TemplatePath { get; set; }
         public virtual ICollection<Declaration> Declarations { get; set; }

@@ -75,7 +75,7 @@
 
                 <domain:ViewItem Title="USER" Icon="Account">
                     <domain:ViewItem.Content>
-                        <settings:OfficersView />
+                        <settings:UserView />
                     </domain:ViewItem.Content>
                 </domain:ViewItem>
 

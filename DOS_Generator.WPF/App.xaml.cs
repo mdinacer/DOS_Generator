@@ -65,7 +65,7 @@ namespace DOS_Generator.WPF
             services.AddTransient<AgencyFormViewModel>();
             services.AddTransient<PortsViewModel>();
             services.AddTransient<ShipsViewModel>();
-            services.AddTransient<OfficersViewModel>();
+            services.AddTransient<UserViewModel>();
             services.AddTransient<AgenciesViewModel>();
             services.AddTransient<DeclarationFormViewModel>();
 

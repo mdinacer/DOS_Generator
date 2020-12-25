@@ -4,9 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DOS_Generator.WPF.Views.Settings
 {
-    public partial class OfficersView
+    public partial class UserView
     {
-        public OfficersView()
+        public UserView()
         {
             InitializeComponent();
         }
@@ -18,7 +18,7 @@ namespace DOS_Generator.WPF.Views.Settings
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            DataContext = App.ServiceProvider.GetRequiredService<OfficersViewModel>();
+            DataContext = App.ServiceProvider.GetRequiredService<UserViewModel>();
         }
     }
 }

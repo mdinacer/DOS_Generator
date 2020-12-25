@@ -24,8 +24,8 @@ namespace DOS_Generator.WPF.Services
         public AgenciesViewModel AgenciesViewModel =>
             App.ServiceProvider.GetRequiredService<AgenciesViewModel>();
 
-        public OfficersViewModel OfficersViewModel =>
-            App.ServiceProvider.GetRequiredService<OfficersViewModel>();
+        public UserViewModel UserViewModel =>
+            App.ServiceProvider.GetRequiredService<UserViewModel>();
 
 
     }

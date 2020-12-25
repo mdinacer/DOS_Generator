@@ -8,7 +8,7 @@ using MaterialDesignThemes.Wpf;
 
 namespace DOS_Generator.WPF.ViewModels.Settings
 {
-    public class OfficersViewModel : ViewModelBase
+    public class UserViewModel : ViewModelBase
     {
         #region Properties
 
@@ -21,7 +21,7 @@ namespace DOS_Generator.WPF.ViewModels.Settings
 
         #region Constructors
 
-        public OfficersViewModel(IUnitOfWork unitOfWork)
+        public UserViewModel(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
             User = App.User;

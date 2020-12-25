@@ -82,7 +82,7 @@ namespace DOS_Generator.WPF.ViewModels.Forms
             Title = user.Officer.Title;
             Address = user.Officer.Address;
             Phone = user.Officer.Phone;
-            Email = user.Officer.Email;
+            Email = user.Email;
             Initials = user.Officer.Initials;
             TemplatePath = user.Officer.TemplatePath;
         }
@@ -96,7 +96,7 @@ namespace DOS_Generator.WPF.ViewModels.Forms
             user.Officer.Title = Title;
             user.Officer.Address = Address;
             user.Officer.Phone = Phone;
-            user.Officer.Email = Email;
+            user.Email = Email;
             user.Officer.Initials = Initials;
             user.Officer.TemplatePath = SetTemplate();
         }
@@ -110,7 +110,6 @@ namespace DOS_Generator.WPF.ViewModels.Forms
                 Title = Title,
                 Address = Address,
                 Phone = Phone,
-                Email = Email,
                 Initials = Initials,
                 TemplatePath = SetTemplate()
             };

@@ -1,0 +1,5 @@
+﻿Create Template setting:
+	- Declaration template path
+	- Email Credentials
+	- Message document Template
+	- Add SMTP Servers (Gmail, outlook, custom)
