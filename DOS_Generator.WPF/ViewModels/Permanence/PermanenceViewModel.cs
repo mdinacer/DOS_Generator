@@ -172,29 +172,53 @@ namespace DOS_Generator.WPF.ViewModels.Permanence
 
         #region Declaration
 
+        private static async  Task<NetworkCredential> GetCredentials()
+        {
+            NetworkCredential credentials;
+            if (App.User.EmailPassword != null)
+            {
+                var decodedPassword = DataProtectionService.DecodeSecureString(DataProtectionService.Unprotect(App.User.EmailPassword));
+
+                credentials = new NetworkCredential(App.User.Email,decodedPassword);
+                
+            }
+            else
+            {
+                var view = new EmailCredentialsFormView();
+                var result = await ShowDialog(view);
+                if (!result) return null;
+
+                var email = view.Email;
+                var password = view.PasswordBox.SecurePassword;
+
+                if (string.IsNullOrWhiteSpace(email)) return null;
+
+                credentials = new NetworkCredential(email, password);
+            }
+
+            return credentials;
+        }
+
         private async void SendDeclarations()
         {
             if (!Declarations.Any()) return;
             IsBusy = true;
 
-            var view = new EmailCredentialsFormView();
-            var result = await ShowDialog(view);
-            if (!result) return;
 
-            var email = view.Email;
-            var password = view.PasswordBox.Password;
-            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password)) return;
+            var credentials = await GetCredentials();
 
-            var credentials = new NetworkCredential(email, password);
             foreach (var element in Declarations)
             {
+                element.Officer = App.User.Officer;
                 await MailService.SendDeclaration(element, credentials);
                 element.IsSent = true;
+                await _unitOfWork.Declarations.AddAsync(element);
             }
 
             await _unitOfWork.CommitAsync();
 
             LoadData();
+            IsBusy = false;
         } // TODO Review
 
         private async void GenerateDeclarations()

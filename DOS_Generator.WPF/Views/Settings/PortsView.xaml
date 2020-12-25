@@ -13,7 +13,7 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
-       
+
 
         <Style TargetType="materialDesign:PackIcon">
             <Setter Property="Height" Value="22" />
@@ -83,7 +83,10 @@
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Style="{StaticResource DefaultTextStyle}" Text="{Binding Name}" />
+                                        <TextBlock
+                                            FontFamily="{StaticResource Montserrat-Bold}"
+                                            Style="{StaticResource DefaultTextStyle}"
+                                            Text="{Binding Name}" />
                                         <Button
                                             Grid.Column="1"
                                             Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Path=DataContext.EditCommand}"
@@ -136,7 +139,10 @@
                                             FontSize="14"
                                             Text="FACILITIES" />
 
-                                        <ScrollViewer Grid.Row="1" Grid.Column="0">
+                                        <ScrollViewer
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            Padding="20">
                                             <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding Source={StaticResource Facilities}}">
                                                 <ItemsControl.ItemsPanel>
                                                     <ItemsPanelTemplate>

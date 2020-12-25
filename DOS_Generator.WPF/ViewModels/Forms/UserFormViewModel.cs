@@ -32,7 +32,6 @@ namespace DOS_Generator.WPF.ViewModels.Forms
         public string UserPassword { get; set; }
         public string Email { get; set; }
         public string EmailPassword { get; set; }
-        public bool IsUsePersonnelEmail { get; set; }
 
         public ObservableCollection<MailServer> Servers { get; set; }
         public MailServer SelectedServer { get; set; }
@@ -112,8 +111,9 @@ namespace DOS_Generator.WPF.ViewModels.Forms
         {
             if (user == null) return;
             IsEdit = true;
-            UserName = UserName;
+            UserName = user.Name;
             Email = user.Email;
+            SelectedServer = user.MailServer;
 
             FirstName = user.Officer.FirstName;
             LastName = user.Officer.LastName;
@@ -134,9 +134,10 @@ namespace DOS_Generator.WPF.ViewModels.Forms
         public void UpdateUser(User user)
         {
             if (user == null) return;
-            UserName = UserName;
+            
             user.Email = Email;
             user.EmailPassword = SetEmailPassword();
+            user.MailServer = SelectedServer;
 
             user.Officer.FirstName = FirstName;
             user.Officer.LastName = LastName;
@@ -171,6 +172,7 @@ namespace DOS_Generator.WPF.ViewModels.Forms
 
             user.Email = Email;
             user.EmailPassword = SetEmailPassword();
+            user.MailServer = SelectedServer;
 
             user.Officer = CreateOfficer();
 
@@ -315,21 +317,6 @@ namespace DOS_Generator.WPF.ViewModels.Forms
                         }
                         break;
                     }
-
-                case nameof(TemplatePath):
-                    {
-                        if (string.IsNullOrWhiteSpace(TemplatePath))
-                        {
-                            _validationErrorsByProperty[nameof(TemplatePath)] =
-                                new List<object> { "This field can't be empty" };
-                            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(nameof(TemplatePath)));
-                        }
-                        else if (_validationErrorsByProperty.Remove(nameof(TemplatePath)))
-                        {
-                            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(nameof(TemplatePath)));
-                        }
-                        break;
-                    }
             }
         }
 
@@ -341,7 +328,6 @@ namespace DOS_Generator.WPF.ViewModels.Forms
             Validate(nameof(LastName));
             Validate(nameof(Title));
             Validate(nameof(Initials));
-            Validate(nameof(TemplatePath));
 
             return HasErrors;
         }

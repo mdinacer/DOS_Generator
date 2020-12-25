@@ -11,14 +11,14 @@ namespace DOS_Generator.WPF.Services
 {
     public static class MailService
     {
-        public static SmtpClient SmtpServer = new SmtpClient
-        {
-            Host = "smtp.gmail.com",
-            Port = 587,
-            UseDefaultCredentials = false,
-            EnableSsl = true,
-            DeliveryMethod = SmtpDeliveryMethod.Network
-        };
+        //public static SmtpClient SmtpServer = new SmtpClient
+        //{
+        //    Host = "smtp.gmail.com",
+        //    Port = 587,
+        //    UseDefaultCredentials = false,
+        //    EnableSsl = true,
+        //    DeliveryMethod = SmtpDeliveryMethod.Network
+        //};
 
         public static async Task SendMail(MailMessage mail, NetworkCredential credentials)
         {
@@ -26,13 +26,56 @@ namespace DOS_Generator.WPF.Services
 
             try
             {
-                SmtpServer.Credentials = credentials;
-                await SmtpServer.SendMailAsync(mail);
+                var server = App.User.MailServer;
+                var smtpServer = new SmtpClient
+                {
+                    Host = server.Host,
+                    Port = server.Port,
+                    UseDefaultCredentials = false,
+                    EnableSsl = true,
+                    Credentials = credentials
+                };
+
+                await smtpServer.SendMailAsync(mail);
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
             }
+        }
+
+        private static async Task<string> GetMessage()
+        {
+            string content = null;
+            const string htmlFile = @".\Resources\message.html";
+
+            if (!File.Exists(htmlFile))
+            {
+                if (File.Exists(@".\Resources\message.docx"))
+                    DeclarationCreatorService.ConvertWordToHtml(@".\Resources\message.docx", htmlFile);
+                else
+                    content =
+                        @"<html>
+                             <body>
+                                 <p>Dear all,</p>
+                                 <p>Good day,</p>
+                                 <p>Welcome to Arzew port,</p>
+                                 <p>Please find as attachment:</p>
+                                 <p><b>DECLARATION OF SECURITY</b></p>
+                                 <p>- The <b>S.S.O</b> must fill up, sign and re-send this declaration please.</p>
+                                 <p>Best Regards.</p>
+                             </body>
+                        </html>";
+            }
+            else
+            {
+                using (var reader = File.OpenText(htmlFile))
+                {
+                    content = await reader.ReadToEndAsync();
+                }
+            }
+
+            return content;
         }
 
         public static async Task SendDeclaration(Declaration declaration, NetworkCredential credentials)
@@ -47,13 +90,12 @@ namespace DOS_Generator.WPF.Services
             if (!File.Exists(output)) return;
 
 
-            using var reader = File.OpenText(@".\Resources\message.html");
             using var mail = new MailMessage
             {
                 From = new MailAddress(credentials.UserName),
                 Subject = $"DECLARATION OF SECURITY ({declaration.Ship.Name})",
                 IsBodyHtml = true,
-                Body = await reader.ReadToEndAsync(),
+                Body = await GetMessage(),
                 To = {destination},
                 Attachments = {new Attachment(output)}
             };
@@ -67,7 +109,6 @@ namespace DOS_Generator.WPF.Services
                 || string.IsNullOrWhiteSpace(credentials.Password)
                 || declarations.Count >= 0) return;
 
-            
 
             declarations.ForEach(async declaration =>
                 await SendDeclaration(declaration, credentials));

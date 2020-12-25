@@ -49,8 +49,15 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <StackPanel>
-                <TextBlock Text="1 - Application Login" />
-                <Grid Margin="20,0">
+                <TextBlock
+                    Margin="30,10"
+                    FontFamily="{StaticResource Montserrat-Bold}"
+                    FontSize="28"
+                    Text="{Binding UserName}"
+                    Visibility="{Binding IsEdit, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <TextBlock Text="Application Login" Visibility="{Binding IsEdit, Converter={StaticResource InverseBoolToVisConverter}}" />
+
+                <Grid Margin="20,0" Visibility="{Binding IsEdit, Converter={StaticResource InverseBoolToVisConverter}}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
@@ -63,8 +70,7 @@
                     <TextBox
                         Grid.Column="1"
                         materialDesign:HintAssist.Hint="Password"
-                        Text="{Binding UserPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        Visibility="{Binding IsEdit, Converter={StaticResource InverseBoolToVisConverter}}" />
+                        Text="{Binding UserPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
 
                 <Border
@@ -73,7 +79,7 @@
                     Background="{DynamicResource MaterialDesignDivider}"
                     UseLayoutRounding="True" />
 
-                <TextBlock Text="2 - Email Login" />
+                <TextBlock Text="Email Login" />
                 <Grid Margin="20,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -88,7 +94,7 @@
 
                 <TextBlock
                     MaxWidth="400"
-                    Margin="20,0,10,20"
+                    Margin="30,0,10,20"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     FontFamily="{StaticResource Montserrat-Light}"
@@ -103,9 +109,9 @@
                     Background="{DynamicResource MaterialDesignDivider}"
                     UseLayoutRounding="True" />
 
-                <TextBlock Text="3 - Email Server" />
+                <TextBlock Text="Email Server" />
 
-                <Grid Margin="20,0" Visibility="{Binding IsEdit, Converter={StaticResource InverseBoolToVisConverter}}">
+                <Grid Margin="20,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
@@ -148,10 +154,9 @@
 
 
             <StackPanel Grid.Row="0" Grid.Column="2">
-                <TextBlock Margin="20,10,20,0" Text="4 - Security officer" />
+                <TextBlock Margin="20,10,20,0" Text="Security officer" />
                 <Grid Margin="20,0">
                     <Grid.RowDefinitions>
-                        <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
@@ -187,12 +192,12 @@
 
 
                     <TextBox
-                        Grid.Row="4"
+                        Grid.Row="3"
                         Grid.Column="0"
                         materialDesign:HintAssist.Hint="Phone"
                         Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
-                        Grid.Row="4"
+                        Grid.Row="3"
                         Grid.Column="1"
                         materialDesign:HintAssist.Hint="Initials"
                         Text="{Binding Initials, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -202,7 +207,7 @@
                     Margin="20,10"
                     VerticalAlignment="Center"
                     FontFamily="{StaticResource Montserrat-Regular}"
-                    Text="5 - Stamp / Signature image path*" />
+                    Text="Stamp / Signature image path*" />
 
                 <Grid Margin="20,0">
                     <Grid.Resources />

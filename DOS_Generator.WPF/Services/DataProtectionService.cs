@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -22,6 +23,29 @@ namespace DOS_Generator.WPF.Services
             if(string.IsNullOrEmpty(value))
                 throw new ArgumentNullException(nameof(value), "The passed value can't be null");
             return Encoding.UTF8.GetBytes(value);
+        }
+
+        public static string DecodeString(byte[] value)
+        {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value), "The passed value can't be null");
+            return Encoding.UTF8.GetString(value);
+        }
+
+        public static SecureString DecodeSecureString(byte[] value)
+        {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value), "The passed value can't be null");
+
+            var password = Encoding.UTF8.GetString(value);
+
+            var securePassword = new SecureString();
+
+            foreach (var c in password)
+                securePassword.AppendChar(c);
+
+            securePassword.MakeReadOnly();
+            return securePassword;
         }
 
         public static byte[] Protect(byte[] data)

@@ -214,6 +214,25 @@ namespace DOS_Generator.WPF.Services
             w.WriteLine(html);
         }
 
+        //public static string ConvertWordToHtml(string input)
+        //{
+        //    if (!File.Exists(input)) return null;
+
+        //    using var doc = WordprocessingDocument.Open(input, true);
+        //    var convSettings = new HtmlConverterSettings
+        //    {
+        //        FabricateCssClasses = false,
+        //        RestrictToSupportedLanguages = false,
+        //        RestrictToSupportedNumberingFormats = false
+        //    };
+
+        //    var html = HtmlConverter.ConvertToHtml(doc, convSettings);
+
+        //    using var fs = new FileStream(output, FileMode.Create);
+        //    using var w = new StreamWriter(fs, Encoding.UTF8);
+        //    w.WriteLine(html);
+        //}
+
         #endregion
 
         #region Events
