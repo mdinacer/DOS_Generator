@@ -241,23 +241,23 @@ namespace DOS_Generator.WPF.ViewModels.Permanence
 
             if (string.IsNullOrWhiteSpace(path) || !Directory.Exists(path)) return;
 
-            files.ForEach(file =>
-            {
-                if (string.IsNullOrWhiteSpace(file)) return;
-                Process.Start(new ProcessStartInfo
-                {
-                    FileName = file,
-                    UseShellExecute = true,
-                    Verb = "open"
-                });
-            });
-
-            //Process.Start(new ProcessStartInfo
+            //files.ForEach(file =>
             //{
-            //    FileName = path,
-            //    UseShellExecute = true,
-            //    Verb = "open"
+            //    if (string.IsNullOrWhiteSpace(file)) return;
+            //    Process.Start(new ProcessStartInfo
+            //    {
+            //        FileName = file,
+            //        UseShellExecute = true,
+            //        Verb = "open"
+            //    });
             //});
+
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = path,
+                UseShellExecute = true,
+                Verb = "open"
+            });
         }
 
         private async Task SaveDeclarations()

@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Win32;
 
 namespace DOS_Generator.WPF
 {
@@ -68,19 +69,29 @@ namespace DOS_Generator.WPF
             services.AddTransient<UserViewModel>();
             services.AddTransient<AgenciesViewModel>();
             services.AddTransient<DeclarationFormViewModel>();
+            services.AddTransient<GeneralSettingsViewModel>();
 
             services.AddTransient<MainWindow>();
         }
 
+        private static bool CheckMsWord()
+        {
+            using var regWord = Registry.ClassesRoot.OpenSubKey("Word.Application");
+
+            return regWord != null;
+        }
+
         protected override async void OnStartup(StartupEventArgs e)
         {
+            var isWordInstalled = CheckMsWord();
+
+            if (!isWordInstalled)
+            {
+                MessageBox.Show("Microsoft Word is not installed, please install it from Microsoft market");
+                Current.Shutdown();
+            }
             if (_host != null)
                 await _host.StartAsync();
-
-            //Thread.CurrentThread.CurrentCulture = new CultureInfo("fr-DZ");
-            //Thread.CurrentThread.CurrentUICulture = new CultureInfo("fr-DZ");
-            //FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(
-            //    XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
             Messenger = new Messenger();
 
             if (!File.Exists(@".\AppSettings.xml"))

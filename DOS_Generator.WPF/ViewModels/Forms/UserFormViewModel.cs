@@ -224,8 +224,7 @@ namespace DOS_Generator.WPF.ViewModels.Forms
                 Directory.CreateDirectory(".\\Resources\\");
 
             var outputFile = $".\\Resources\\{Path.GetRandomFileName()}{Path.GetExtension(TemplatePath)}";
-            var userName = IsEdit ? App.User.Name : UserName;
-            EncryptionService.EncryptFile(userName, TemplatePath, outputFile);
+            EncryptionService.EncryptFile(UserName, TemplatePath, outputFile);
             return outputFile;
         }
 

@@ -97,7 +97,11 @@
                     </domain:ViewItem.Content>
                 </domain:ViewItem>
 
-                <domain:ViewItem Title="TEMPLATE" Icon="FileWord" />
+                <domain:ViewItem Title="GENERAL" Icon="SettingsBackupRestore">
+                    <domain:ViewItem.Content>
+                        <settings:GeneralSettingsView />
+                    </domain:ViewItem.Content>
+                </domain:ViewItem>
 
             </ListBox>
         </materialDesign:ColorZone>

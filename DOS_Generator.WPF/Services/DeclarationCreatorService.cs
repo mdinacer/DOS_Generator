@@ -87,9 +87,23 @@ namespace DOS_Generator.WPF.Services
                     File.Exists(declaration.Officer.TemplatePath))
                 {
                     var sourceFile = declaration.Officer.TemplatePath;
+
                     var tempFile = $".\\Resources\\stamp{Path.GetExtension(sourceFile)}";
+
+                    if(File.Exists(tempFile))
+                        File.Delete(tempFile);
+
                     EncryptionService.DecryptFile(App.User.Name, sourceFile, tempFile);
                     await ReplaceImage(document, tempFile, "image1.png");
+                    try
+                    {
+                        File.Delete(tempFile);
+                    }
+                    catch (Exception)
+                    {
+
+                        //ignore
+                    }
                 }
 
                 #endregion
@@ -192,7 +206,7 @@ namespace DOS_Generator.WPF.Services
             {
                 writer.Write(sourceImage);
             }
-            File.Delete(source);
+            
         }
 
         public static void ConvertWordToHtml(string input, string output)
@@ -213,25 +227,6 @@ namespace DOS_Generator.WPF.Services
             using var w = new StreamWriter(fs, Encoding.UTF8);
             w.WriteLine(html);
         }
-
-        //public static string ConvertWordToHtml(string input)
-        //{
-        //    if (!File.Exists(input)) return null;
-
-        //    using var doc = WordprocessingDocument.Open(input, true);
-        //    var convSettings = new HtmlConverterSettings
-        //    {
-        //        FabricateCssClasses = false,
-        //        RestrictToSupportedLanguages = false,
-        //        RestrictToSupportedNumberingFormats = false
-        //    };
-
-        //    var html = HtmlConverter.ConvertToHtml(doc, convSettings);
-
-        //    using var fs = new FileStream(output, FileMode.Create);
-        //    using var w = new StreamWriter(fs, Encoding.UTF8);
-        //    w.WriteLine(html);
-        //}
 
         #endregion
 

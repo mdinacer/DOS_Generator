@@ -27,6 +27,9 @@ namespace DOS_Generator.WPF.Services
         public UserViewModel UserViewModel =>
             App.ServiceProvider.GetRequiredService<UserViewModel>();
 
+        public GeneralSettingsViewModel GeneralSettingsViewModel =>
+            App.ServiceProvider.GetRequiredService<GeneralSettingsViewModel>();
+
 
     }
 }
