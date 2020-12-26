@@ -113,6 +113,7 @@ namespace DOS_Generator.WPF.ViewModels.Forms
             IsEdit = true;
             UserName = user.Name;
             Email = user.Email;
+            EmailPassword = user.EmailPassword == null ? null : GetEmailPassword(user.EmailPassword);
             SelectedServer = user.MailServer;
 
             FirstName = user.Officer.FirstName;
@@ -122,6 +123,12 @@ namespace DOS_Generator.WPF.ViewModels.Forms
             Phone = user.Officer.Phone;
             Initials = user.Officer.Initials;
             TemplatePath = user.Officer.TemplatePath;
+        }
+
+        private string GetEmailPassword(byte[] value)
+        {
+            var bytesPassword = DataProtectionService.Unprotect(value);
+            return DataProtectionService.DecodeString(bytesPassword);
         }
 
         private byte[] SetEmailPassword()
@@ -135,17 +142,35 @@ namespace DOS_Generator.WPF.ViewModels.Forms
         {
             if (user == null) return;
             
-            user.Email = Email;
-            user.EmailPassword = SetEmailPassword();
-            user.MailServer = SelectedServer;
+            if(!user.Email.Equals(Email))
+                user.Email = Email;
 
-            user.Officer.FirstName = FirstName;
-            user.Officer.LastName = LastName;
-            user.Officer.Title = Title;
-            user.Officer.Address = Address;
-            user.Officer.Phone = Phone;
-            user.Officer.Initials = Initials;
-            user.Officer.TemplatePath = SetTemplate();
+            if (!user.EmailPassword.Equals(EmailPassword))
+                user.EmailPassword = SetEmailPassword();
+
+            if (!user.MailServer.Equals(SelectedServer))
+                user.MailServer = SelectedServer;
+
+            if (!user.Officer.FirstName.Equals(FirstName))
+                user.Officer.FirstName = FirstName;
+
+            if (!user.Officer.LastName.Equals(LastName))
+                user.Officer.LastName = LastName;
+
+            if (!user.Officer.Title.Equals(Title))
+                user.Officer.Title = Title;
+
+            if (!user.Officer.Address.Equals(Address))
+                user.Officer.Address = Address;
+
+            if (!user.Officer.Phone.Equals(Phone))
+                user.Officer.Phone = Phone;
+
+            if (!user.Officer.Initials.Equals(Initials))
+                user.Officer.Initials = Initials;
+
+            if (!user.Officer.TemplatePath.Equals(TemplatePath))
+                user.Officer.TemplatePath = SetTemplate();
         }
 
         private Officer CreateOfficer()
