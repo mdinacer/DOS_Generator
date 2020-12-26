@@ -22,13 +22,13 @@
         VerticalAlignment="Center"
         materialDesign:ShadowAssist.ShadowDepth="Depth2"
         CornerRadius="4"
+        Grid.IsSharedSizeScope="True"
         Mode="Dark">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" SharedSizeGroup="Logo" />
                 <ColumnDefinition />
-                <ColumnDefinition Width="160" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" SharedSizeGroup="Logo" />
             </Grid.ColumnDefinitions>
             <TextBlock
                 Margin="0,0,20,0"
@@ -111,15 +111,15 @@
 
             </ListBox>
 
-            <Grid Column="3">
+            <Grid Grid.Column="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <materialDesign:PackIcon
-                    Width="28"
-                    Height="28"
+                    Width="18"
+                    Height="18"
                     VerticalAlignment="Center"
                     Kind="Account" />
                 <TextBlock
@@ -127,13 +127,13 @@
                     Margin="5,0,10,0"
                     VerticalAlignment="Center"
                     FontFamily="{StaticResource Montserrat-Regular}"
-                    FontSize="18"
+                    FontSize="13"
                     Text="{Binding UserName}" />
                 <Button
                     Grid.Column="2"
                     Click="ButtonBase_OnClick"
                     Content="{materialDesign:PackIcon LocationExit,
-                                                      Size=24}"
+                                                      Size=18}"
                     Foreground="{StaticResource RedColor}"
                     Style="{StaticResource ToolButton}"
                     ToolTip="Logout" />
