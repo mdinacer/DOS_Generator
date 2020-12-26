@@ -172,15 +172,15 @@ namespace DOS_Generator.WPF.ViewModels.Permanence
 
         #region Declaration
 
-        private static async  Task<NetworkCredential> GetCredentials()
+        private static async Task<NetworkCredential> GetCredentials()
         {
             NetworkCredential credentials;
             if (App.User.EmailPassword != null)
             {
-                var decodedPassword = DataProtectionService.DecodeSecureString(DataProtectionService.Unprotect(App.User.EmailPassword));
+                var decodedPassword =
+                    DataProtectionService.DecodeSecureString(DataProtectionService.Unprotect(App.User.EmailPassword));
 
-                credentials = new NetworkCredential(App.User.Email,decodedPassword);
-                
+                credentials = new NetworkCredential(App.User.Email, decodedPassword);
             }
             else
             {
@@ -204,22 +204,24 @@ namespace DOS_Generator.WPF.ViewModels.Permanence
             if (!Declarations.Any()) return;
             IsBusy = true;
 
-
+            await SaveDeclarations();
             var credentials = await GetCredentials();
 
+            if (credentials == null
+                || string.IsNullOrEmpty(credentials.UserName)
+                || string.IsNullOrEmpty(credentials.Password)) return;
+
+
+            //await MailService.SendDeclarations(Declarations.ToList(), credentials);
             foreach (var element in Declarations)
             {
-                element.Officer = App.User.Officer;
                 await MailService.SendDeclaration(element, credentials);
                 element.IsSent = true;
-                await _unitOfWork.Declarations.AddAsync(element);
             }
-
             await _unitOfWork.CommitAsync();
-
             LoadData();
             IsBusy = false;
-        } // TODO Review
+        }
 
         private async void GenerateDeclarations()
         {
@@ -236,13 +238,12 @@ namespace DOS_Generator.WPF.ViewModels.Permanence
 
 
             var path = Path.GetDirectoryName(files.First());
-            //var path = $"{App.Settings.GeneratedDeclarationsPath}{DateTime.Today:dd.MM.yy}\\";
 
             if (string.IsNullOrWhiteSpace(path) || !Directory.Exists(path)) return;
 
             files.ForEach(file =>
             {
-                if(string.IsNullOrWhiteSpace(file)) return;
+                if (string.IsNullOrWhiteSpace(file)) return;
                 Process.Start(new ProcessStartInfo
                 {
                     FileName = file,
@@ -257,8 +258,6 @@ namespace DOS_Generator.WPF.ViewModels.Permanence
             //    UseShellExecute = true,
             //    Verb = "open"
             //});
-
-
         }
 
         private async Task SaveDeclarations()
