@@ -11,16 +11,7 @@ namespace DOS_Generator.WPF.Services
 {
     public static class MailService
     {
-        //public static SmtpClient SmtpServer = new SmtpClient
-        //{
-        //    Host = "smtp.gmail.com",
-        //    Port = 587,
-        //    UseDefaultCredentials = false,
-        //    EnableSsl = true,
-        //    DeliveryMethod = SmtpDeliveryMethod.Network
-        //};
-
-        public static async Task SendMail(MailMessage mail, NetworkCredential credentials)
+        private static async Task SendMail(MailMessage mail, ICredentialsByHost credentials)
         {
             if (mail == null) return;
 
@@ -59,7 +50,7 @@ namespace DOS_Generator.WPF.Services
                              <body>
                                  <p>Dear all,</p>
                                  <p>Good day,</p>
-                                 <p>Welcome to Arzew port,</p>
+                                 <p>Welcome to our port,</p>
                                  <p>Please find as attachment:</p>
                                  <p><b>DECLARATION OF SECURITY</b></p>
                                  <p>- The <b>S.S.O</b> must fill up, sign and re-send this declaration please.</p>
@@ -89,20 +80,20 @@ namespace DOS_Generator.WPF.Services
 
             if (!File.Exists(output)) return;
 
-
-            using var mail = new MailMessage
+            using (var mail = new MailMessage())
             {
-                From = new MailAddress(credentials.UserName),
-                Subject = $"DECLARATION OF SECURITY ({declaration.Ship.Name})",
-                IsBodyHtml = true,
-                Body = await GetMessage(),
-                To = {destination},
-                Attachments = {new Attachment(output)}
-            };
-            await SendMail(mail, credentials);
+                mail.From = new MailAddress(credentials.UserName);
+                mail.Subject = $"DECLARATION OF SECURITY ({declaration.Ship.Name})";
+                mail.IsBodyHtml = true;
+                mail.Body = await GetMessage();
+                mail.To.Add(destination);
+                mail.Attachments.Add(new Attachment(output));
+
+                await SendMail(mail, credentials);
+            }
         }
 
-        public static void SendDeclarations(List<Declaration> declarations, NetworkCredential credentials)
+        public static async Task SendDeclarations(List<Declaration> declarations, NetworkCredential credentials)
         {
             if (credentials == null
                 || string.IsNullOrWhiteSpace(credentials.UserName)
