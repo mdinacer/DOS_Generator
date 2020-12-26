@@ -12,8 +12,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:BundledTheme
                     BaseTheme="Light"
-                    PrimaryColor="Teal"
-                    SecondaryColor="Teal" />
+                    PrimaryColor="Blue"
+                    SecondaryColor="Blue" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
@@ -26,7 +26,7 @@
             <FontFamily x:Key="Montserrat-Bold">./Resources/Fonts/#Montserrat Bold</FontFamily>
             <FontFamily x:Key="Montserrat-Light">./Resources/Fonts/#Montserrat Light</FontFamily>
 
-            <Style BasedOn="{StaticResource MaterialDesignScrollBarMinimal}" TargetType="ScrollBar" />
+            <Style BasedOn="{StaticResource MaterialDesignScrollBarMinimal}" TargetType="{x:Type ScrollBar}" />
 
             <Style
                 x:Key="ToolButton"
@@ -37,6 +37,7 @@
                 <Setter Property="Padding" Value="0" />
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
             </Style>
 
             <Style
@@ -49,6 +50,7 @@
                 <Setter Property="Padding" Value="5" />
                 <Setter Property="HorizontalAlignment" Value="Stretch" />
                 <Setter Property="VerticalAlignment" Value="Bottom" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
             </Style>
 
             <Style x:Key="TitleTextStyle" TargetType="TextBlock">
