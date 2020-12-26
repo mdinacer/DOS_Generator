@@ -61,7 +61,7 @@ namespace DOS_Generator.WPF.ViewModels.Activities
         public bool IsSent { get; set; }
         public bool IsReceived { get; set; }
         public bool IsDeleted { get; set; }
-        public bool IsBusy { get; set; }
+        private bool IsBusy { get; set; }
         private bool IsFiltered => CheckFiltered();
 
         #endregion
@@ -84,7 +84,7 @@ namespace DOS_Generator.WPF.ViewModels.Activities
 
             _declarations = CollectionViewSource.GetDefaultView(Declarations);
             _declarations.GroupDescriptions.Add(new PropertyGroupDescription("Date.Date"));
-            _declarations.SortDescriptions.Add(new SortDescription("Date.Date", ListSortDirection.Ascending));
+            _declarations.SortDescriptions.Add(new SortDescription("Date.Date", ListSortDirection.Descending));
             _declarations.SortDescriptions.Add(new SortDescription("Id", ListSortDirection.Ascending));
             _declarations.SortDescriptions.Add(new SortDescription("Ship.Name", ListSortDirection.Ascending));
             _declarations.Filter += Filter;
@@ -117,8 +117,8 @@ namespace DOS_Generator.WPF.ViewModels.Activities
             var byShip = SelectedShip == null || declaration.ShipId == SelectedShip.Id;
             var byOfficer = SelectedOfficer == null || declaration.OfficerId == SelectedOfficer.Id;
             var byFacility = SelectedFacility == null || declaration.FacilityId == SelectedFacility.Id;
-            var bySendingStatus = declaration.IsSent == IsSent;
-            var byReceivingStatus = declaration.IsReceived == IsReceived;
+            var bySendingStatus = !IsSent || declaration.IsSent;//declaration.IsSent == IsSent;
+            var byReceivingStatus = !IsReceived || declaration.IsReceived; //declaration.IsReceived == IsReceived;
             var byDate = Date == null || declaration.Date.Date == Date.Value.Date;
 
             return isDeleted && byDate && byShip && byOfficer
