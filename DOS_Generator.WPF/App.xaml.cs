@@ -20,9 +20,6 @@ using Microsoft.Win32;
 
 namespace DOS_Generator.WPF
 {
-    /// <summary>
-    ///     Interaction logic for App.xaml
-    /// </summary>
     public partial class App
     {
         private readonly IHost _host;
@@ -90,6 +87,7 @@ namespace DOS_Generator.WPF
                 MessageBox.Show("Microsoft Word is not installed, please install it from Microsoft market");
                 Current.Shutdown();
             }
+
             if (_host != null)
                 await _host.StartAsync();
             Messenger = new Messenger();
