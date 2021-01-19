@@ -62,62 +62,19 @@ namespace DOS_Generator.WPF.Services
 
         private static async Task UpdateDeclarationContents(string outputFile, Declaration declaration)
         {
-            using (var document = WordprocessingDocument.Open(outputFile, true))
+
+            #region Table
+
+            using (var wordDocument = WordprocessingDocument.Open(outputFile, true))
             {
-                string docText;
-                using (var streamReader = new StreamReader(document.MainDocumentPart.GetStream(FileMode.Open)))
-                {
-                    docText = await streamReader.ReadToEndAsync();
-                    streamReader.Dispose();
-                }
-
-                var fields = GenerateFields(declaration);
-
-                foreach (var (key, value) in fields) docText = new Regex(key).Replace(docText, value);
-
-                await using (var streamWriter =
-                    new StreamWriter(document.MainDocumentPart.GetStream(FileMode.Create, FileAccess.Write)))
-                {
-                    await streamWriter.WriteAsync(docText);
-                }
-
-                #region Stamp
-
-                if (!string.IsNullOrEmpty(declaration.Officer.TemplatePath) &&
-                    File.Exists(declaration.Officer.TemplatePath))
-                {
-                    var sourceFile = declaration.Officer.TemplatePath;
-
-                    var tempFile = $".\\Resources\\stamp{Path.GetExtension(sourceFile)}";
-
-                    if(File.Exists(tempFile))
-                        File.Delete(tempFile);
-
-                    EncryptionService.DecryptFile(App.User.Name, sourceFile, tempFile);
-                    await ReplaceImage(document, tempFile, "image1.png");
-                    try
-                    {
-                        File.Delete(tempFile);
-                    }
-                    catch (Exception)
-                    {
-
-                        //ignore
-                    }
-                }
-
-                #endregion
-
-                #region Table
-
-                var table = document.MainDocumentPart.Document.Body.Elements<Table>().ElementAt(2);
+                var table = wordDocument.MainDocumentPart.Document.Body.Elements<Table>().ElementAt(2);
                 var rowsCount = table.Elements<TableRow>().Count();
 
 
                 var templateView = App.ServiceProvider.GetRequiredService<DeclarationTemplateViewModel>();
 
                 var entries = templateView.GetEntries(); // create a boolean array from the Declaration entries
-                for (var i = 2; i < rowsCount - 1; i++)
+                for (var i = 2; i < rowsCount ; i++)
                 {
                     var row = table.Elements<TableRow>().ElementAt(i);
                     var cell = row.Elements<TableCell>().ElementAt(1);
@@ -128,9 +85,68 @@ namespace DOS_Generator.WPF.Services
                     var textElement = run.Elements<Text>().First();
                     textElement.Text = element ? declaration.Officer?.Initials ?? "Yes" : "N/A";
                 }
-
-                #endregion
+                wordDocument.Save();
+                wordDocument.Close();
             }
+
+            #endregion
+
+            using (var wordDocument = WordprocessingDocument.Open(outputFile, true))
+            {
+                string docText;
+                using (var streamReader = new StreamReader(wordDocument.MainDocumentPart.GetStream(FileMode.Open)))
+                {
+                    docText = await streamReader.ReadToEndAsync();
+                    streamReader.Dispose();
+                }
+
+                var fields = GenerateFields(declaration);
+
+                foreach (var (key, value) in fields)
+                {
+                    docText = new Regex(key).Replace(docText, value.Replace("&", "&amp;"));
+                }
+
+                using (var streamWriter =
+                    new StreamWriter(wordDocument.MainDocumentPart.GetStream(FileMode.Create, FileAccess.Write)))
+                {
+                    await streamWriter.WriteAsync(docText);
+                }
+
+                wordDocument.MainDocumentPart.Document.Save();
+                wordDocument.Close();
+            }
+
+
+
+            #region Stamp
+
+            using (var wordDocument = WordprocessingDocument.Open(outputFile, true))
+            {
+                if (!string.IsNullOrEmpty(declaration.Officer.TemplatePath) &&
+                    File.Exists(declaration.Officer.TemplatePath))
+                {
+                    var sourceFile = declaration.Officer.TemplatePath;
+
+                    var tempFile = $".\\Resources\\stamp{Path.GetExtension(sourceFile)}";
+
+                    if (File.Exists(tempFile))
+                        File.Delete(tempFile);
+
+                    EncryptionService.DecryptFile(App.User.Name, sourceFile, tempFile);
+                    await ReplaceImage(wordDocument, tempFile, "image1.png");
+                    try
+                    {
+                        File.Delete(tempFile);
+                    }
+                    catch (Exception)
+                    {
+                        //ignore
+                    }
+                }
+            }
+
+            #endregion
         }
 
         /// <summary>
@@ -151,7 +167,7 @@ namespace DOS_Generator.WPF.Services
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path); // Create the generated declarations folder if not found
 
-            var fileName = $"{path}{shipName}_dos.docx";
+            var fileName = $"{path}{shipName.Replace(' ', '_')}_dos.docx";
 
             File.Copy(templateFile, fileName, true);
 
@@ -188,25 +204,25 @@ namespace DOS_Generator.WPF.Services
                 {"PhoneField", currentConfig.Phone},
                 {"FaxField", currentConfig.Fax},
                 {"EmailField", currentConfig.Email},
-                {"RadioField", currentConfig.Radio}
+                {"RadioField", currentConfig.Radio},
+                {"Undefined", string.Empty},
             };
         }
 
         private static async Task ReplaceImage(WordprocessingDocument document, string source, string destination)
         {
-            if(!File.Exists(source)) return;
+            if (!File.Exists(source)) return;
 
             var sourceImage = await File.ReadAllBytesAsync(source);
             var outputImage = document.MainDocumentPart.ImageParts // or EndsWith
                 .First(p => p.Uri.ToString().Contains(destination));
 
-            if(outputImage == null) return;
+            if (outputImage == null) return;
 
             await using (var writer = new BinaryWriter(outputImage.GetStream()))
             {
                 writer.Write(sourceImage);
             }
-            
         }
 
         public static void ConvertWordToHtml(string input, string output)

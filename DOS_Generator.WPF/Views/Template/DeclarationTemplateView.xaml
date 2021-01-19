@@ -21,12 +21,6 @@
             </ResourceDictionary.MergedDictionaries>
 
             <Style BasedOn="{StaticResource ToolButton}" TargetType="Button" />
-            <Style
-                x:Key="SecondaryTitleTextStyle"
-                BasedOn="{StaticResource TitleTextStyle}"
-                TargetType="TextBlock">
-                <Setter Property="FontSize" Value="18" />
-            </Style>
 
             <Style BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}" TargetType="TextBox">
                 <Setter Property="Width" Value="350" />
@@ -49,7 +43,10 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.ColumnSpan="3" Style="{StaticResource TitleTextStyle}">
+        <TextBlock
+            Grid.ColumnSpan="3"
+            Style="{StaticResource TitleTextStyle}"
+            TextAlignment="Left">
             DECLARATION TEMPLATE
         </TextBlock>
 
@@ -77,7 +74,13 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBlock Margin="20,5,20,5" Style="{StaticResource SecondaryTitleTextStyle}">DECLARATION CHECKPOINTS</TextBlock>
+            <TextBlock
+                Margin="20,5,20,5"
+                FontFamily="{StaticResource Montserrat-Regular}"
+                FontSize="14"
+                TextAlignment="Left">
+                DECLARATION CHECKPOINTS
+            </TextBlock>
             <Button
                 Grid.Column="1"
                 Command="{Binding SaveEntriesCommand}"
@@ -93,7 +96,10 @@
                 ToolTip="Reload defaults" />
         </Grid>
 
-        <Grid Grid.Row="1" Grid.Column="2">
+        <Grid
+            Grid.Row="1"
+            Grid.Column="2"
+            Margin="0,0,20,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
@@ -103,7 +109,8 @@
             <TextBlock
                 Margin="20,5,20,5"
                 VerticalAlignment="Bottom"
-                Style="{StaticResource SecondaryTitleTextStyle}">
+                FontFamily="{StaticResource Montserrat-Regular}"
+                FontSize="14">
                 CONTACT INFORMATION
             </TextBlock>
 
@@ -210,7 +217,7 @@
         <ScrollViewer
             Grid.Row="2"
             Grid.Column="0"
-            Margin="20,0"
+            Margin="20,0,5,0"
             HorizontalAlignment="Stretch"
             VerticalScrollBarVisibility="Auto">
             <ItemsControl
@@ -232,8 +239,8 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="template:DosEntry">
                         <materialDesign:Card
-                            Margin="2"
-                            Padding="0"
+                            Width="auto"
+                            Margin="2,2,10,2"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
                             HorizontalContentAlignment="Stretch"
@@ -251,9 +258,9 @@
                                     </Style>
                                 </Grid.Resources>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition SharedSizeGroup="IndexCol" />
+                                    <ColumnDefinition Width="60" />
                                     <ColumnDefinition Width="250" />
-                                    <ColumnDefinition SharedSizeGroup="IndexCol" />
+                                    <ColumnDefinition Width="60" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition SharedSizeGroup="ItemHeight" />
@@ -273,13 +280,15 @@
                                     TextWrapping="Wrap" />
                                 <ToggleButton
                                     Grid.Column="2"
-                                    Margin="0"
+                                    Width="50"
+                                    Margin="0,0,10,0"
                                     Padding="0"
                                     HorizontalAlignment="Center"
                                     Background="Transparent"
+                                    Foreground="{DynamicResource PrimaryHueMidBrush}"
                                     IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     Style="{StaticResource MaterialDesignActionToggleButton}">
-                                    <materialDesign:PackIcon Kind="Close" />
+                                    <materialDesign:PackIcon Foreground="{DynamicResource PrimaryHueDarkBrush}" Kind="Close" />
                                 </ToggleButton>
                             </Grid>
                         </materialDesign:Card>
@@ -327,7 +336,7 @@
         <materialDesign:Card
             Grid.Row="2"
             Grid.Column="2"
-            Margin="20,10"
+            Margin="20,10,40,10"
             Padding="20,50"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"

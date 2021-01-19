@@ -10,6 +10,7 @@
     xmlns:permanence="clr-namespace:DOS_Generator.WPF.Views.Permanence"
     xmlns:settings="clr-namespace:DOS_Generator.WPF.Views.Settings"
     xmlns:template="clr-namespace:DOS_Generator.WPF.Views.Template"
+    xmlns:views="clr-namespace:DOS_Generator.WPF.Views"
     d:DesignHeight="450"
     d:DesignWidth="800"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
@@ -37,7 +38,7 @@
                 <Run
                     FontFamily="{StaticResource Montserrat-Bold}"
                     FontSize="16"
-                    Foreground="{StaticResource RedColor}"
+                    Foreground="{DynamicResource PrimaryHueMidBrush}"
                     Text="DOS" />
                 <Run FontFamily="{StaticResource Montserrat-Light}" Text="GENERATOR" />
             </TextBlock>

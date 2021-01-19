@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using DOS_Generator.Core;
 using DOS_Generator.Core.Models;
 using DOS_Generator.Data;
+using DOS_Generator.License;
 using DOS_Generator.WPF.Domain;
 using DOS_Generator.WPF.Services;
 using DOS_Generator.WPF.ViewModels.Activities;
@@ -23,6 +24,7 @@ namespace DOS_Generator.WPF
     public partial class App
     {
         private readonly IHost _host;
+        public static License.License License { get; private set; }
 
         public App()
         {
@@ -68,6 +70,10 @@ namespace DOS_Generator.WPF
             services.AddTransient<DeclarationFormViewModel>();
             services.AddTransient<GeneralSettingsViewModel>();
 
+
+            services.AddScoped<LoginFormViewModel>();
+            services.AddScoped<UserFormViewModel>();
+
             services.AddTransient<MainWindow>();
         }
 
@@ -80,8 +86,10 @@ namespace DOS_Generator.WPF
 
         protected override async void OnStartup(StartupEventArgs e)
         {
+            LicenseService.CreateFakeLicense();
+            CheckLicense();
             var isWordInstalled = CheckMsWord();
-
+          
             if (!isWordInstalled)
             {
                 MessageBox.Show("Microsoft Word is not installed, please install it from Microsoft market");
@@ -135,5 +143,23 @@ namespace DOS_Generator.WPF
 
             base.OnExit(e);
         }
+
+        private void CheckLicense()
+        {
+            var license = LicenseService.ReadLicenseFromFile(@".\license.lic");
+
+            var isValidLicense = LicenseService.CheckLicenseValidity(license);
+
+            if (!isValidLicense)
+            {
+                MessageBox.Show("Your license is not valid");
+                Current.Shutdown(1);
+            }
+
+            License = license;
+        }
+
+
+        
     }
 }

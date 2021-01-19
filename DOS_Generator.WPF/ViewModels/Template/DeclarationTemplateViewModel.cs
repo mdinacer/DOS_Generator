@@ -31,6 +31,7 @@ namespace DOS_Generator.WPF.ViewModels.Template
                 {
                     Index = 1, IsChecked = false, Text = "Ensuring the performance of all security duties "
                 },
+                
                 new DosEntry
                 {
                     Index = 2,
@@ -38,8 +39,12 @@ namespace DOS_Generator.WPF.ViewModels.Template
                     Text = "Monitoring restricted areas to ensure that only " +
                            "authorized personnel have access  "
                 },
+                
                 new DosEntry {Index = 3, IsChecked = false, Text = "Controlling access to the port facility  "},
+               
                 new DosEntry {Index = 4, IsChecked = false, Text = "Controlling access to the ship"},
+               
+
                 new DosEntry
                 {
                     Index = 5,
@@ -47,6 +52,9 @@ namespace DOS_Generator.WPF.ViewModels.Template
                     Text = "Monitoring of the port facility, including" +
                            " berthing areas and areas surrounding the ship "
                 },
+
+                
+
                 new DosEntry
                 {
                     Index = 6,
@@ -71,7 +79,11 @@ namespace DOS_Generator.WPF.ViewModels.Template
                     Text = "Ensuring that security communication is " +
                            "readily available between the ship and port " +
                            "facility"
-                }
+                },
+
+
+
+
             };
         }
 

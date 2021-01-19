@@ -8,6 +8,7 @@
     d:DataContext="{Binding Source={StaticResource Locator}, Path=UserViewModel}"
     Loaded="OnLoaded"
     Unloaded="OnUnloaded"
+    UseLayoutRounding="True"
     mc:Ignorable="d">
 
     <Grid>
@@ -128,16 +129,18 @@
                 <materialDesign:ColorZone
                     Grid.Row="3"
                     Margin="10,0,10,10"
-                    Padding="10"
+                    Padding="10,0"
                     BorderBrush="{DynamicResource MaterialDesignDivider}"
                     BorderThickness="1"
                     CornerRadius="8"
                     UseLayoutRounding="True">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="61*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="76*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="68*" />
                         </Grid.ColumnDefinitions>
                         <Grid.Resources>
                             <Style BasedOn="{StaticResource ToolButton}" TargetType="Button" />
@@ -166,7 +169,14 @@
                             </Button.Content>
                         </Button>
 
-                        <Button Grid.Column="1" Command="{Binding ResetPasswordCommand}">
+                        <Border
+                            Grid.Column="1"
+                            Width="1"
+                            Margin="5,0"
+                            Background="{DynamicResource MaterialDesignDivider}"
+                            UseLayoutRounding="True" />
+
+                        <Button Grid.Column="2" Command="{Binding ResetPasswordCommand}">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="PasswordReset" />
@@ -175,7 +185,14 @@
                             </Button.Content>
                         </Button>
 
-                        <Button Grid.Column="2" Command="{Binding DeleteAccountCommand}">
+                        <Border
+                            Grid.Column="3"
+                            Width="1"
+                            Margin="5,0"
+                            Background="{DynamicResource MaterialDesignDivider}"
+                            UseLayoutRounding="True" />
+
+                        <Button Grid.Column="4" Command="{Binding DeleteAccountCommand}">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="AccountRemove" />

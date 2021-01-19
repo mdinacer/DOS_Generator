@@ -133,8 +133,8 @@ namespace DOS_Generator.WPF.ViewModels.Settings
             if (ship == null) return;
 
             var isOk = (bool)
-                await DialogHost.Show(new ConfirmationDialog("Attention",
-                    "This element will be permanently deleted, Proceed?"));
+                await DialogHost.Show(new ConfirmationDialog(message: "This element will be permanently deleted, Proceed?",
+                    title:"Attention"));
 
             if (!isOk) return;
 

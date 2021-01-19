@@ -93,7 +93,7 @@ namespace DOS_Generator.WPF.Services
             }
         }
 
-        public static async Task SendDeclarations(List<Declaration> declarations, NetworkCredential credentials)
+        public static void SendDeclarations(List<Declaration> declarations, NetworkCredential credentials)
         {
             if (credentials == null
                 || string.IsNullOrWhiteSpace(credentials.UserName)

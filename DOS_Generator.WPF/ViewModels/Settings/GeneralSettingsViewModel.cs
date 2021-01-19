@@ -90,11 +90,12 @@ namespace DOS_Generator.WPF.ViewModels.Settings
             });
         }
 
-        private bool IsCustomServer(MailServer server)
+        private static bool IsCustomServer(MailServer server)
         {
-            return server != null 
-                   && !server.ServiceName.Contains("google", StringComparison.InvariantCultureIgnoreCase)
-                   && !server.ServiceName.Contains("outlook", StringComparison.InvariantCultureIgnoreCase);
+            return server != null
+                   && !server.ServiceName.Contains("gmail", StringComparison.InvariantCultureIgnoreCase)
+                   && !server.ServiceName.Contains("outlook", StringComparison.InvariantCultureIgnoreCase)
+                   && !server.ServiceName.Contains("yahoo", StringComparison.InvariantCultureIgnoreCase);
         }
 
         private void ViewFile(string value)

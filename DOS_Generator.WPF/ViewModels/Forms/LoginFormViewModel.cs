@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using DOS_Generator.Core;
@@ -8,6 +7,7 @@ using DOS_Generator.WPF.Domain;
 using DOS_Generator.WPF.Services;
 using DOS_Generator.WPF.Views.Forms;
 using MaterialDesignThemes.Wpf;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DOS_Generator.WPF.ViewModels.Forms
 {
@@ -35,7 +35,7 @@ namespace DOS_Generator.WPF.ViewModels.Forms
         public async void Authenticate()
         {
             var user = (await _unitOfWork.Users.GetAllAsync()).SingleOrDefault(u =>
-                u.Name.Equals(UserName, StringComparison.InvariantCultureIgnoreCase));
+                u.Name.Equals(UserName, StringComparison.CurrentCultureIgnoreCase));
 
             if (user == null)
             {
@@ -56,7 +56,7 @@ namespace DOS_Generator.WPF.ViewModels.Forms
 
         private async void AddUser()
         {
-            var viewModel = new UserFormViewModel(_unitOfWork);
+            var viewModel = App.ServiceProvider.GetRequiredService<UserFormViewModel>();
             var view = new UserFormView {DataContext = viewModel};
             await DialogHost.Show(view, "LoginFormDialogHost", async (sender, args) =>
             {

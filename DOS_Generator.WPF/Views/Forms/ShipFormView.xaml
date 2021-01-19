@@ -40,6 +40,7 @@
             <TextBlock Style="{StaticResource TitleTextStyle}" Text="SHIP" />
 
             <TextBox materialDesign:HintAssist.Hint="Name" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Button Command="{Binding SearchCommand}">Search on Q88.com</Button>
             <TextBox materialDesign:HintAssist.Hint="IMO number" Text="{Binding ImoNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <TextBox materialDesign:HintAssist.Hint="Port of registry" Text="{Binding PortOfRegistry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <TextBox materialDesign:HintAssist.Hint="Email" Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />

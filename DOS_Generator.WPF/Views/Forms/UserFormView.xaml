@@ -61,6 +61,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <TextBox
                         Width="auto"
@@ -70,7 +71,32 @@
                     <TextBox
                         Grid.Column="1"
                         materialDesign:HintAssist.Hint="Password"
-                        Text="{Binding UserPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding UserPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Visibility="{Binding ElementName=ShowLoginPassword, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                    <PasswordBox
+                        x:Name="LoginPassword"
+                        Grid.Column="1"
+                        Width="200"
+                        materialDesign:HintAssist.Hint="Password"
+                        PasswordChanged="LoginPassword_OnPasswordChanged"
+                        Visibility="{Binding ElementName=ShowLoginPassword, Path=IsChecked, Converter={StaticResource InverseBoolToVisConverter}}" />
+
+                    <ToggleButton
+                        x:Name="ShowLoginPassword"
+                        Grid.Column="2"
+                        Margin="0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        Background="Transparent"
+                        IsChecked="False"
+                        Style="{StaticResource MaterialDesignActionToggleButton}"
+                        ToolTip="Show/Hide Password">
+                        <materialDesign:ToggleButtonAssist.OnContent>
+                            <materialDesign:PackIcon Kind="VisibilityOff" />
+                        </materialDesign:ToggleButtonAssist.OnContent>
+                        <materialDesign:PackIcon Kind="Visibility" />
+                    </ToggleButton>
                 </Grid>
 
                 <Border
@@ -79,22 +105,46 @@
                     Background="{DynamicResource MaterialDesignDivider}"
                     UseLayoutRounding="True" />
 
-                <TextBlock Text="Email Login" />
+                <TextBlock Text="Email" />
                 <Grid Margin="20,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBox materialDesign:HintAssist.Hint="Name" Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox materialDesign:HintAssist.Hint="Address" Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Grid.Column="1"
                         materialDesign:HintAssist.Hint="Password"
-                        Text="{Binding EmailPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding EmailPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Visibility="{Binding ElementName=ShowMailPassword, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                    <PasswordBox
+                        x:Name="MailPassword"
+                        Grid.Column="1"
+                        materialDesign:HintAssist.Hint="Password"
+                        PasswordChanged="MailPassword_OnPasswordChanged"
+                        Visibility="{Binding ElementName=ShowMailPassword, Path=IsChecked, Converter={StaticResource InverseBoolToVisConverter}}" />
+                    <ToggleButton
+                        x:Name="ShowMailPassword"
+                        Grid.Column="2"
+                        Margin="0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        Background="Transparent"
+                        IsChecked="False"
+                        Style="{StaticResource MaterialDesignActionToggleButton}"
+                        ToolTip="Show/Hide Password">
+                        <materialDesign:ToggleButtonAssist.OnContent>
+                            <materialDesign:PackIcon Kind="VisibilityOff" />
+                        </materialDesign:ToggleButtonAssist.OnContent>
+                        <materialDesign:PackIcon Kind="Visibility" />
+                    </ToggleButton>
                 </Grid>
 
                 <TextBlock
                     MaxWidth="400"
-                    Margin="30,0,10,20"
+                    Margin="30,10,10,20"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     FontFamily="{StaticResource Montserrat-Light}"
@@ -103,20 +153,15 @@
                     TextAlignment="Left"
                     TextWrapping="Wrap" />
 
-                <Border
-                    Height="1"
-                    Margin="10,5"
-                    Background="{DynamicResource MaterialDesignDivider}"
-                    UseLayoutRounding="True" />
-
-                <TextBlock Text="Email Server" />
 
                 <Grid Margin="20,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <ComboBox
+                        Width="Auto"
+                        HorizontalAlignment="Stretch"
                         materialDesign:HintAssist.Hint="Server"
                         DisplayMemberPath="ServiceName"
                         ItemsSource="{Binding Source={StaticResource ServersCollection}}"

@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt-Official" Version="0.1.109" />
-    <PackageReference Include="DocumentFormat.OpenXml" Version="2.12.0" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.12.1" />
     <PackageReference Include="Fody" Version="6.3.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -23,11 +23,11 @@
     <PackageReference Include="MaterialDesignColors" Version="1.2.7" />
     <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.1">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
@@ -38,6 +38,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DOS_Generator.Core\DOS_Generator.Core.csproj" />
     <ProjectReference Include="..\DOS_Generator.Data\DOS_Generator.Data.csproj" />
+    <ProjectReference Include="..\DOS_Generator.License\DOS_Generator.License.csproj" />
   </ItemGroup>
 
   <ItemGroup>

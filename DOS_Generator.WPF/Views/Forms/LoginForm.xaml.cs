@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using DOS_Generator.Core;
 using DOS_Generator.WPF.ViewModels.Forms;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,7 +10,7 @@ namespace DOS_Generator.WPF.Views.Forms
         public LoginForm()
         {
             InitializeComponent();
-            DataContext = new LoginFormViewModel(App.ServiceProvider.GetService<IUnitOfWork>());
+            DataContext = App.ServiceProvider.GetRequiredService<LoginFormViewModel>();
         }
 
         private void PasswordBox_OnPasswordChanged(object sender, RoutedEventArgs e)

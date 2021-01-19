@@ -1,28 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using DOS_Generator.WPF.ViewModels.Forms;
 
 namespace DOS_Generator.WPF.Views.Forms
 {
-    /// <summary>
-    /// Interaction logic for UserFormView.xaml
-    /// </summary>
-    public partial class UserFormView : UserControl
+    public partial class UserFormView
     {
         public UserFormView()
         {
             InitializeComponent();
+        }
+
+        private void LoginPassword_OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if(DataContext == null) return;
+            if(!(DataContext is UserFormViewModel viewModel )) return;
+
+            viewModel.UserPassword = ((PasswordBox) sender).Password;
+        }
+
+        private void MailPassword_OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (DataContext == null) return;
+            if (!(DataContext is UserFormViewModel viewModel)) return;
+
+            viewModel.EmailPassword = ((PasswordBox)sender).Password;
         }
     }
 }

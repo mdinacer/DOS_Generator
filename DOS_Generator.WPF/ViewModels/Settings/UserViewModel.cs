@@ -49,6 +49,7 @@ namespace DOS_Generator.WPF.ViewModels.Settings
             viewModel.UpdateUser(User);
 
             await _unitOfWork.CommitAsync();
+            App.User = await _unitOfWork.Users.GetByIdAsync(User.Id);
         }
 
         private async void ResetPassword()
@@ -58,6 +59,8 @@ namespace DOS_Generator.WPF.ViewModels.Settings
 
             await DialogHost.Show(view,async delegate(object sender, DialogClosingEventArgs args)
             {
+                var isOk = (bool)args.Parameter;
+                if (!isOk) return;
                 var isAuthenticated = await viewModel.Authenticate();
                 if (!isAuthenticated)
                     args.Cancel();

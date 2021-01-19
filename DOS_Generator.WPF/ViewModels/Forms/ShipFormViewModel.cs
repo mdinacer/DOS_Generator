@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using DOS_Generator.Core;
 using DOS_Generator.Core.Models;
+using DOS_Generator.WPF.Helpers;
 using DOS_Generator.WPF.Services;
 
 namespace DOS_Generator.WPF.ViewModels.Forms
@@ -228,11 +230,10 @@ namespace DOS_Generator.WPF.ViewModels.Forms
                             new List<object> {"This field can't be empty"};
                         ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(nameof(AgencyEmail)));
                     }
-                    else if ((await _unitOfWork.Agencies.GetAllAsync())
-                        .Any(agency => agency.Email.Equals(AgencyEmail, StringComparison.InvariantCultureIgnoreCase)))
+                    else if (! EmailAddressCheck.CheckEmail(AgencyEmail))
                     {
                         _validationErrorsByProperty[nameof(AgencyEmail)] =
-                            new List<object> {"Another Agency with the same name already exists"};
+                            new List<object> {"Not valid email address"};
                         ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(nameof(AgencyEmail)));
                     }
                     else if (_validationErrorsByProperty.Remove(nameof(AgencyEmail)))
@@ -287,6 +288,13 @@ namespace DOS_Generator.WPF.ViewModels.Forms
                 AgencyName = AgencyEmail = string.Empty;
                 IsNewAgency = false;
             });
+
+        public ICommand SearchCommand => new RelayCommand(o => Process.Start(new ProcessStartInfo
+        {
+            FileName = $"https://www.q88.com/viewship.aspx?vessel={Name.ToLower()}",
+            UseShellExecute = true,
+            Verb = "open"
+        }), o => !string.IsNullOrWhiteSpace(Name));
 
         #endregion
     }

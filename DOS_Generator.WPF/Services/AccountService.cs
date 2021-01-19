@@ -20,7 +20,7 @@ namespace DOS_Generator.WPF.Services
             var user = new User
             {
                 Name = model.UserName,
-                Hash = BC.HashPassword($"{model.UserName}{model.Password}")
+                Hash = BC.HashPassword($"{model.UserName.ToLower()}{model.Password}")
             };
             return user;
         }
@@ -29,10 +29,10 @@ namespace DOS_Generator.WPF.Services
         {
             // get account from database
             var account = (await unitOfWork.Users.GetAllAsync())
-                .SingleOrDefault(o => o.Name.Equals(model.UserName, StringComparison.InvariantCultureIgnoreCase));
+                .SingleOrDefault(o => o.Name.Equals(model.UserName, StringComparison.CurrentCultureIgnoreCase));
 
             // check account found and verify password
-            return account != null && BC.Verify($"{model.UserName}{model.Password}", account.Hash);
+            return account != null && BC.Verify($"{model.UserName.ToLower()}{model.Password}", account.Hash);
         }
     }
 }
